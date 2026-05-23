@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cuando metimos el mundo en una máquina · 498A Light · 3 de junio de 2026</title>
+<meta name="description" content="Ponencia académica de Carlos Ortet. Reputación, marcas e instituciones ante los modelos de lenguaje. Versión 498A editorial light." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dela+Gothic+One&family=Hepta+Slab:wght@200;300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-50:#E9F9EC; --green-100:#D4F2D9; --green-200:#A8E5B4; --green-300:#74D898;
+  --green:#2DD60F; --green-500:#1FAA17; --green-deep:#0E7A1F; --green-900:#0A5418;
+  --green-soft:rgba(45,214,15,.12); --green-line:rgba(14,122,31,.35);
+  --black:#000000; --grey-900:#1A1A1A; --grey-800:#2D2D2D; --grey-700:#404040;
+  --grey-600:#5C5C5C; --grey-500:#7A7A7A; --grey-400:#999999; --grey-300:#BFBFBF;
+  --grey-200:#D9D9D9; --grey-100:#ECECEC; --grey-50:#F7F7F7; --white:#FFFFFF;
+  --pg-paper:#FAFAFA; --pg-paper-green:#F4FAF3;
+  --bg:var(--pg-paper); --bg-soft:var(--pg-paper-green); --text:var(--grey-700);
+  --text-muted:var(--grey-500); --text-strong:var(--black);
+  --line:rgba(0,0,0,.08); --line-strong:rgba(0,0,0,.14);
+  --accent:var(--green-deep); --alert:#E84B3C;
+  --gradient-hero-light:radial-gradient(70% 50% at 80% 20%,var(--green-100),transparent 60%),radial-gradient(50% 40% at 20% 80%,var(--green-50),transparent 60%),var(--pg-paper);
+  --gradient-section-light:linear-gradient(180deg,var(--pg-paper) 0%,var(--grey-100) 100%);
+  --gradient-vision:linear-gradient(135deg,var(--green-200) 0%,var(--green-100) 35%,var(--green-50) 75%,var(--white) 100%);
+  --gradient-cta:linear-gradient(135deg,var(--green) 0%,var(--green-deep) 100%);
+  --f-display:"Bebas Neue",Impact,"Arial Narrow",sans-serif;
+  --f-chunky:"Dela Gothic One","Arial Black",sans-serif;
+  --f-body:"Hepta Slab",Georgia,serif;
+  --f-ui:"Roboto",system-ui,Arial,sans-serif;
+  --f-mono:"Roboto Mono",ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--f-body);background:var(--bg);color:var(--text);font-weight:300;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;mix-blend-mode:difference;color:#fff;pointer-events:none}
+.top-nav .brand,.top-nav .counter{font-family:var(--f-mono);font-weight:500;letter-spacing:1.6px;font-size:11px;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.side-nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:95;display:flex;flex-direction:column;gap:10px;mix-blend-mode:difference;color:#fff;max-height:80vh;overflow-y:auto}
+.side-nav::-webkit-scrollbar{display:none}
+.side-nav a{display:flex;align-items:center;justify-content:flex-end;gap:12px;text-decoration:none;color:inherit;font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;pointer-events:auto}
+.side-nav a .lab{opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;font-variant-numeric:tabular-nums;white-space:nowrap}
+.side-nav a:hover .lab{opacity:1;transform:none}
+.side-nav a .dot{width:8px;height:8px;background:#fff;opacity:.5;transition:opacity .25s,transform .25s;flex-shrink:0}
+.side-nav a:hover .dot,.side-nav a.active .dot{opacity:1;transform:scale(1.4);background:var(--green)}
+@media(max-width:520px){.side-nav{display:none}}
+
+/* SLIDE BASE */
+section.slide{min-height:100vh;height:auto;scroll-snap-align:start;scroll-snap-stop:always;padding:14vh 8vw 8vh;display:flex;flex-direction:column;position:relative;overflow:hidden;background:var(--bg);color:var(--text)}
+section.slide.bg-hero{background:var(--gradient-hero-light)}
+section.slide.bg-section{background:var(--gradient-section-light)}
+section.slide.bg-paper-green{background:var(--pg-paper-green)}
+section.slide.bg-deep{background:var(--green-deep);color:var(--white)}
+section.slide.bg-deep .eyebrow-square{color:var(--green-200)}
+section.slide.bg-deep .eyebrow-square::before{background:var(--green-200)}
+section.slide.bg-deep .h-claim,section.slide.bg-deep .h-display{color:var(--white)}
+section.slide.bg-deep .sub{color:var(--green-100)}
+
+/* COMMON */
+.eyebrow-square{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--black);font-weight:500;margin-bottom:24px}
+.eyebrow-square::before{content:"";display:inline-block;width:8px;height:8px;background:var(--green-deep)}
+.h-display{font-family:var(--f-display);font-size:clamp(56px,9vw,140px);font-weight:400;letter-spacing:0;line-height:.95;text-transform:uppercase;color:var(--black)}
+.h-display .acc{color:var(--green-deep)}
+.h-claim{font-family:var(--f-body);font-weight:200;font-size:clamp(28px,4.2vw,52px);line-height:1.15;letter-spacing:-.4px;color:var(--black);max-width:24ch;margin-bottom:24px}
+.h-claim b{font-weight:700;color:var(--green-deep)}
+.h-claim em{font-style:italic;color:var(--grey-700)}
+.sub{font-family:var(--f-body);font-size:18px;font-weight:300;line-height:1.55;color:var(--grey-700);max-width:64ch;margin-bottom:32px}
+.sub b{color:var(--black);font-weight:600}
+.cite{font-family:var(--f-mono);font-size:11px;color:var(--grey-500);font-feature-settings:"tnum" 1}
+
+/* BTN-SPLIT */
+.btn-split{display:inline-flex;align-items:stretch;text-decoration:none;font-family:var(--f-mono);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:500}
+.btn-split__label{padding:14px 22px;border:1px solid var(--black);color:var(--black);line-height:1;display:inline-flex;align-items:center}
+.btn-split__arrow{padding:14px 18px;background:var(--gradient-cta);color:var(--black);line-height:1;display:inline-flex;align-items:center;font-weight:700;font-size:14px}
+
+/* COVER */
+.slide.cover{justify-content:center;align-items:flex-start;background:var(--gradient-hero-light)}
+.slide.cover .h-display{margin-bottom:14px}
+.slide.cover .h-claim{font-family:var(--f-body);font-style:italic;font-weight:200;font-size:clamp(20px,2.6vw,32px);color:var(--grey-700);max-width:48ch}
+.slide.cover .foot{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:flex-end;font-family:var(--f-mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--grey-500);border-top:1px solid var(--line);padding-top:20px}
+.slide.cover .foot .meta-block{display:flex;flex-direction:column;gap:6px;line-height:1.5}
+.slide.cover .foot .meta-block .v{color:var(--black);font-weight:700;font-size:12px;letter-spacing:1.4px}
+.slide.cover .foot .meta-block.right{text-align:right;align-items:flex-end}
+
+/* MAGAZINE QUOTE · full-bleed pullquote estilo editorial */
+.slide.magazine-quote{justify-content:center;align-items:flex-start;background:var(--pg-paper-green);position:relative}
+.slide.magazine-quote::before{
+  content:"\201C"; /* curly opening quote */
+  position:absolute;left:6vw;top:8vh;
+  font-family:var(--f-body);font-style:italic;font-weight:200;
+  font-size:clamp(280px,40vw,560px);line-height:.7;color:var(--green-200);opacity:.55;
+  z-index:0;pointer-events:none;
+}
+.slide.magazine-quote>*{position:relative;z-index:1}
+.slide.magazine-quote .mag-quote{
+  font-family:var(--f-body);font-weight:200;font-style:italic;
+  font-size:clamp(36px,5vw,72px);line-height:1.18;letter-spacing:-.6px;
+  color:var(--black);max-width:24ch;margin-top:32px;
+}
+.slide.magazine-quote .mag-quote b{font-weight:800;color:var(--green-deep);font-style:normal}
+.slide.magazine-quote .mag-quote em{font-style:italic;font-weight:200}
+.slide.magazine-quote .mag-attr{
+  margin-top:36px;font-family:var(--f-mono);font-size:12px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--green-deep);font-weight:600;
+}
+.slide.magazine-quote .mag-sub{
+  margin-top:18px;font-family:var(--f-body);font-size:17px;
+  color:var(--grey-700);max-width:48ch;line-height:1.55;font-weight:300;
+}
+
+/* COMPARE-SPLIT · antes/después en split horizontal full-bleed */
+.slide.compare-split{padding:0;flex-direction:row;align-items:stretch}
+.slide.compare-split .cs-side{flex:1;display:flex;flex-direction:column;justify-content:center;padding:14vh 5vw 8vh;min-width:0;position:relative}
+.slide.compare-split .cs-side.before{background:var(--pg-paper);color:var(--grey-700)}
+.slide.compare-split .cs-side.after{background:var(--green-deep);color:var(--white)}
+.slide.compare-split .cs-side .cs-tag{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px;
+}
+.slide.compare-split .cs-side.before .cs-tag{color:var(--grey-500)}
+.slide.compare-split .cs-side.before .cs-tag::before{content:"";width:8px;height:8px;background:var(--grey-500)}
+.slide.compare-split .cs-side.after .cs-tag{color:var(--green-200)}
+.slide.compare-split .cs-side.after .cs-tag::before{content:"";width:8px;height:8px;background:var(--green)}
+.slide.compare-split .cs-side .cs-display{
+  font-family:var(--f-display);font-size:clamp(56px,7.5vw,120px);line-height:.95;
+  text-transform:uppercase;margin-bottom:16px;
+}
+.slide.compare-split .cs-side.before .cs-display{color:var(--grey-400)}
+.slide.compare-split .cs-side.after .cs-display{color:var(--white)}
+.slide.compare-split .cs-side .cs-claim{
+  font-family:var(--f-body);font-weight:200;font-size:clamp(22px,2.6vw,32px);
+  line-height:1.25;letter-spacing:-.3px;max-width:18ch;margin-bottom:18px;
+}
+.slide.compare-split .cs-side.before .cs-claim{color:var(--grey-800)}
+.slide.compare-split .cs-side.before .cs-claim b{font-weight:700;color:var(--grey-900)}
+.slide.compare-split .cs-side.after .cs-claim{color:var(--white)}
+.slide.compare-split .cs-side.after .cs-claim b{font-weight:700;color:var(--green-300)}
+.slide.compare-split .cs-side .cs-body{
+  font-family:var(--f-body);font-size:15px;line-height:1.6;max-width:38ch;
+}
+.slide.compare-split .cs-side.before .cs-body{color:var(--grey-600)}
+.slide.compare-split .cs-side.before .cs-body b{color:var(--black);font-weight:600}
+.slide.compare-split .cs-side.after .cs-body{color:var(--green-100)}
+.slide.compare-split .cs-side.after .cs-body b{color:var(--white);font-weight:600}
+.slide.compare-split .cs-divider{
+  width:0;border-left:1px solid var(--green-deep);position:relative;
+}
+.slide.compare-split .cs-divider::before{
+  content:"→";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:54px;height:54px;background:var(--white);color:var(--green-deep);
+  font-family:var(--f-display);font-size:32px;line-height:54px;text-align:center;
+  border:1px solid var(--green-deep);
+}
+
+/* VISION CARD */
+.slide.vision-card{justify-content:center;background:var(--gradient-section-light)}
+.vision-hero-card{position:relative;border:1px solid var(--line-strong);background:var(--gradient-vision);padding:48px;min-height:380px;overflow:hidden;display:grid;grid-template-columns:minmax(280px,.9fr) 1.1fr;gap:32px;align-items:center;color:var(--black);margin-top:28px}
+.vision-hero-card__content{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.vision-hero-card__claim{font-family:var(--f-body);font-weight:200;font-size:clamp(28px,3.6vw,44px);line-height:1.1;letter-spacing:-.7px;color:var(--black)}
+.vision-hero-card__claim b{font-weight:700;color:var(--green-deep)}
+.vision-hero-card__visual{align-self:stretch;background:var(--white);border:1px solid rgba(0,0,0,.08);min-height:260px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:var(--grey-500);padding:24px;text-align:center}
+
+/* MANIFESTO DEEP */
+.slide.manifesto{justify-content:center;background:var(--green-deep);color:var(--white);position:relative;overflow:hidden}
+.slide.manifesto::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 100% 0%,rgba(45,214,15,.35),transparent 60%),radial-gradient(50% 40% at 0% 100%,rgba(0,0,0,.35),transparent 60%);pointer-events:none}
+.slide.manifesto>*{position:relative;z-index:1}
+.slide.manifesto .eyebrow-square{color:var(--green-200)}
+.slide.manifesto .eyebrow-square::before{background:var(--green-200)}
+.slide.manifesto .manifesto-claim{font-family:var(--f-body);font-weight:200;font-style:italic;font-size:clamp(36px,5vw,72px);line-height:1.15;letter-spacing:-.6px;color:var(--white);max-width:22ch;margin-bottom:24px}
+.slide.manifesto .manifesto-claim b{font-style:normal;font-weight:700;color:var(--green-200)}
+.slide.manifesto .manifesto-sub{font-family:var(--f-body);font-size:18px;color:var(--green-100);max-width:60ch}
+.slide.manifesto .manifesto-attr{font-family:var(--f-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green-200);margin-top:28px;font-weight:600}
+
+/* HERO STATS */
+.slide.hero-block{justify-content:center}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-strong);border:1px solid var(--line-strong);margin-top:36px}
+.hero-stats .s{background:var(--white);padding:26px 22px;display:flex;flex-direction:column}
+.hero-stats .s .l{font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;color:var(--grey-500);margin-bottom:14px}
+.hero-stats .s .v{font-family:var(--f-display);font-size:clamp(32px,3.6vw,52px);font-weight:400;line-height:1;color:var(--green-deep)}
+.hero-stats .s .v.neutral{color:var(--black)}
+.hero-stats .s .n{font-size:12px;color:var(--grey-500);margin-top:10px;line-height:1.5}
+
+/* BLOG */
+.slide.blog{justify-content:flex-start;background:var(--white)}
+.slide.blog .blog-meta{display:flex;gap:18px;font-family:var(--f-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey-500);margin-bottom:14px;align-items:center}
+.slide.blog .blog-meta .cat{background:var(--green-deep);color:var(--white);padding:4px 10px}
+.slide.blog .blog-title{font-family:var(--f-body);font-weight:300;font-size:clamp(32px,4.6vw,56px);line-height:1.1;letter-spacing:-.5px;color:var(--black);max-width:24ch;margin-bottom:18px}
+.slide.blog .blog-title b{font-weight:800;color:var(--green-deep)}
+.slide.blog .blog-lead{font-family:var(--f-body);font-style:italic;font-size:20px;line-height:1.5;color:var(--grey-700);max-width:60ch;margin-bottom:32px}
+.slide.blog .blog-body{display:grid;grid-template-columns:2fr 1fr;gap:48px;flex:1;min-height:0}
+.slide.blog .blog-body .main{font-family:var(--f-body);font-size:15px;line-height:1.7;color:var(--grey-700)}
+.slide.blog .blog-body .main p{margin-bottom:14px}
+.slide.blog .blog-body .main p b{color:var(--black);font-weight:600}
+.slide.blog .blog-body .sidebar{padding-top:8px;border-top:1px solid var(--line);font-family:var(--f-mono);font-size:11px;color:var(--grey-500)}
+.slide.blog .blog-body .sidebar .label{font-weight:700;color:var(--black);letter-spacing:1.5px;margin-bottom:8px;text-transform:uppercase}
+.slide.blog .blog-body .sidebar p{margin-bottom:14px;line-height:1.55;font-family:var(--f-body);font-size:13px;color:var(--grey-700);text-transform:none;letter-spacing:0}
+.slide.blog .blog-body .sidebar p b{color:var(--black);font-weight:600}
+
+/* HAIRLINE TABLE */
+.slide.table-slide{justify-content:flex-start}
+table.hairline{width:100%;border-collapse:collapse;font-family:var(--f-body);font-size:14.5px;margin-top:24px;background:var(--white);border:1px solid var(--line)}
+table.hairline thead{background:var(--pg-paper-green)}
+table.hairline th{font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-deep);font-weight:700;padding:14px 18px;text-align:left;border-bottom:2px solid var(--black)}
+table.hairline th.num{text-align:right}
+table.hairline td{padding:13px 18px;border-bottom:1px solid var(--line);color:var(--grey-700);vertical-align:top;line-height:1.5}
+table.hairline tbody tr:last-child td{border-bottom:none}
+table.hairline tbody tr:hover{background:var(--pg-paper-green)}
+table.hairline td b{color:var(--black);font-weight:600}
+table.hairline td em{font-style:italic}
+table.hairline td.num{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums;color:var(--green-deep);font-weight:700}
+table.hairline td.label{font-weight:600;color:var(--black);white-space:nowrap}
+
+/* PILLAR CARDS — 3 columnas para observaciones */
+.pillars-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-strong);border:1px solid var(--line-strong);margin-top:24px}
+.pillars-3 .p{background:var(--white);padding:32px 28px;display:flex;flex-direction:column;gap:14px}
+.pillars-3 .p .pl{font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:600}
+.pillars-3 .p .pn{font-family:var(--f-display);font-size:64px;line-height:.9;color:var(--green-deep)}
+.pillars-3 .p h4{font-family:var(--f-body);font-weight:700;font-size:20px;line-height:1.25;color:var(--black);letter-spacing:-.2px}
+.pillars-3 .p p{font-family:var(--f-body);font-size:14px;line-height:1.55;color:var(--grey-700)}
+.pillars-3 .p p b{color:var(--black);font-weight:600}
+.pillars-3 .p p em{font-style:italic}
+
+/* H-SCROLL · casos */
+.slide.h-scroll{justify-content:flex-start;padding-right:0}
+.h-scroll-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1px;background:var(--line-strong);border:1px solid var(--line-strong);margin-top:24px;flex:1;min-height:0;scroll-behavior:smooth}
+.h-scroll-track::-webkit-scrollbar{height:6px}
+.h-scroll-track::-webkit-scrollbar-track{background:var(--line)}
+.h-scroll-track::-webkit-scrollbar-thumb{background:var(--green-deep)}
+.h-scroll-track .panel{flex:0 0 70vw;scroll-snap-align:start;background:var(--white);padding:36px 40px;display:flex;flex-direction:column;justify-content:center;min-width:0;gap:14px}
+.h-scroll-track .panel.intro{background:var(--green-deep);color:var(--white)}
+.h-scroll-track .panel.outro{background:var(--pg-paper-green)}
+.h-scroll-track .panel .ptag{font-family:var(--f-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--green-deep)}
+.h-scroll-track .panel.intro .ptag{color:var(--green-200)}
+.h-scroll-track .panel .pn{font-family:var(--f-display);font-size:120px;line-height:.95;color:var(--green-deep)}
+.h-scroll-track .panel.intro .pn{color:var(--green)}
+.h-scroll-track .panel .pnum-lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey-500);margin-top:-6px}
+.h-scroll-track .panel h3{font-family:var(--f-body);font-weight:300;font-size:30px;line-height:1.2;letter-spacing:-.3px;color:var(--black);margin-top:8px;max-width:22ch}
+.h-scroll-track .panel.intro h3{color:var(--white);font-size:38px;max-width:18ch}
+.h-scroll-track .panel h3 b{font-weight:800;color:var(--green-deep)}
+.h-scroll-track .panel.intro h3 b{color:var(--green-200)}
+.h-scroll-track .panel p{font-family:var(--f-body);font-size:15px;line-height:1.65;color:var(--grey-700);max-width:48ch}
+.h-scroll-track .panel.intro p{color:var(--green-100)}
+.h-scroll-track .panel p b{color:var(--black);font-weight:600}
+.h-scroll-track .panel.intro p b{color:var(--white)}
+.h-scroll-track .panel .interp{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-family:var(--f-body);font-style:italic;font-size:13.5px;color:var(--grey-500);line-height:1.55;max-width:48ch}
+.h-scroll-track .panel.intro .interp{color:var(--green-200);border-top-color:rgba(168,229,180,.3)}
+.h-scroll-track .panel .interp b{color:var(--black);font-style:normal;font-weight:600}
+.h-scroll-track .panel.intro .interp b{color:var(--white)}
+.h-scroll-hint{font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey-500);margin-top:14px;display:flex;align-items:center;gap:8px;font-weight:500}
+.h-scroll-hint::after{content:"→";color:var(--green-deep);font-weight:700;font-size:16px}
+
+/* QUESTIONS LIST */
+.questions-list{list-style:none;margin-top:18px;counter-reset:q;border-top:1px solid var(--line)}
+.questions-list li{
+  counter-increment:q;padding:22px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:80px 220px 1fr;gap:32px;align-items:baseline;
+}
+.questions-list li::before{
+  content:counter(q,decimal-leading-zero);
+  font-family:var(--f-display);font-size:64px;color:var(--green-deep);line-height:.9;
+}
+.questions-list li .ql{font-family:var(--f-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--black)}
+.questions-list li p{font-family:var(--f-body);font-size:16px;line-height:1.6;color:var(--grey-700);max-width:52ch}
+.questions-list li p b{color:var(--black);font-weight:600}
+.questions-list li p em{font-style:italic}
+
+/* REFERENCES BLOG-STYLE */
+.refs-blog{margin-top:18px;column-count:2;column-gap:48px;column-rule:1px solid var(--line)}
+.refs-blog .ref{break-inside:avoid;margin-bottom:14px;font-family:var(--f-body);font-size:13px;line-height:1.5;color:var(--grey-700)}
+.refs-blog .ref b{color:var(--black);font-weight:600}
+.refs-blog .ref em{font-style:italic}
+
+/* CLOSING / Q&A */
+.slide.closing{justify-content:flex-start;background:var(--gradient-hero-light)}
+.slide.closing .h-display{margin-bottom:14px;max-width:14ch}
+.slide.closing .closing-sub{font-family:var(--f-body);font-weight:300;font-size:18px;color:var(--grey-700);max-width:60ch;line-height:1.55;margin-bottom:32px}
+.slide.closing .closing-sub b{color:var(--black);font-weight:600}
+.slide.closing .contact{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-top:1px solid var(--line);padding-top:24px;max-width:1100px}
+.slide.closing .contact .col .l{font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;font-weight:600;color:var(--green-deep);margin-bottom:10px}
+.slide.closing .contact .col p{font-family:var(--f-body);font-size:14px;color:var(--grey-700);line-height:1.55;margin-bottom:4px}
+.slide.closing .contact .col p strong{color:var(--black);font-weight:600}
+.slide.closing .contact .col p.small{font-size:12px;color:var(--grey-500);font-style:italic}
+
+/* ANIM */
+.slide :is(h1,h2,h3,h4,.h-display,.h-claim,.sub,.hero-stats,.eyebrow-square,.vision-hero-card,.manifesto-claim,.manifesto-sub,.manifesto-attr,.mag-quote,.mag-attr,.mag-sub,.cs-side,.pillars-3,.h-scroll-track,.h-scroll-hint,table.hairline,.blog-title,.blog-lead,.blog-body,.questions-list,.refs-blog,.contact){opacity:0;transform:translateY(20px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.slide.in :is(h1,h2,h3,h4,.h-display,.h-claim,.sub,.hero-stats,.eyebrow-square,.vision-hero-card,.manifesto-claim,.manifesto-sub,.manifesto-attr,.mag-quote,.mag-attr,.mag-sub,.cs-side,.pillars-3,.h-scroll-track,.h-scroll-hint,table.hairline,.blog-title,.blog-lead,.blog-body,.questions-list,.refs-blog,.contact){opacity:1;transform:none}
+.slide.in .eyebrow-square{transition-delay:.05s}
+.slide.in .h-display,.slide.in .h-claim,.slide.in .blog-title,.slide.in .manifesto-claim,.slide.in .mag-quote{transition-delay:.2s}
+.slide.in .sub,.slide.in .blog-lead,.slide.in .manifesto-sub,.slide.in .mag-sub{transition-delay:.35s}
+.slide.in .hero-stats,.slide.in .pillars-3,.slide.in .h-scroll-track,.slide.in table.hairline,.slide.in .blog-body,.slide.in .vision-hero-card,.slide.in .questions-list,.slide.in .refs-blog,.slide.in .contact{transition-delay:.5s}
+.slide.in .cs-side.before{transition-delay:.3s}
+.slide.in .cs-side.after{transition-delay:.55s}
+
+@media (prefers-reduced-motion: reduce){
+  .slide :is(h1,h2,h3,h4,div,p,figure,blockquote){opacity:1!important;transform:none!important;transition:none!important}
+}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero-stats,.pillars-3,.slide.closing .contact{grid-template-columns:1fr 1fr}
+  .h-scroll-track .panel{flex:0 0 88vw}
+  .slide.compare-split{flex-direction:column;min-height:100vh}
+  .slide.compare-split .cs-divider{display:none}
+  .blog-body{grid-template-columns:1fr!important;gap:24px}
+  .refs-blog{column-count:1}
+  .questions-list li{grid-template-columns:60px 1fr;gap:18px}
+  .questions-list li .ql{grid-column:2}
+  .questions-list li p{grid-column:2}
+}
+@media(max-width:520px){
+  .hero-stats,.pillars-3,.slide.closing .contact{grid-template-columns:1fr}
+}
+
+@page{size:1920px 1080px;margin:0}
+@media print{
+  html,body{scroll-snap-type:none!important;overflow:visible!important;width:1920px;background:var(--white)}
+  .top-nav,.side-nav{display:none!important}
+  section.slide{page-break-after:always;break-after:page;min-height:1080px;height:1080px;padding:80px 110px}
+  section.slide.compare-split{padding:0;flex-direction:row}
+  section.slide.compare-split .cs-side{padding:90px 60px}
+  section.slide.h-scroll{padding-right:110px}
+  .h-scroll-track{overflow:visible!important}
+  .h-scroll-track .panel{flex:1 1 auto}
+  section.slide:last-child{page-break-after:auto}
+  .slide :is(h1,h2,h3,h4,div,p,figure,blockquote){opacity:1!important;transform:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="brand">PONENCIA · 498A LIGHT · 3 JUN 2026</div>
+  <div class="counter"><span id="cur">01</span> / <span id="total">16</span></div>
+</nav>
+
+<nav class="side-nav" aria-label="Índice">
+  <a href="#s1"><span class="lab">01 · Portada</span><span class="dot"></span></a>
+  <a href="#s2"><span class="lab">02 · Encuadre ·magazine</span><span class="dot"></span></a>
+  <a href="#s3"><span class="lab">03 · Marco conceptual</span><span class="dot"></span></a>
+  <a href="#s4"><span class="lab">04 · Tesis</span><span class="dot"></span></a>
+  <a href="#s5"><span class="lab">05 · Observaciones</span><span class="dot"></span></a>
+  <a href="#s6"><span class="lab">06 · Volumen · stats</span><span class="dot"></span></a>
+  <a href="#s7"><span class="lab">07 · Metodología · blog</span><span class="dot"></span></a>
+  <a href="#s8"><span class="lab">08 · Casos · h-scroll →</span><span class="dot"></span></a>
+  <a href="#s9"><span class="lab">09 · Asimetrías</span><span class="dot"></span></a>
+  <a href="#s10"><span class="lab">10 · Pregunta · manifesto</span><span class="dot"></span></a>
+  <a href="#s11"><span class="lab">11 · Antes / Después</span><span class="dot"></span></a>
+  <a href="#s12"><span class="lab">12 · Simulación · vision</span><span class="dot"></span></a>
+  <a href="#s13"><span class="lab">13 · Dos proyectos</span><span class="dot"></span></a>
+  <a href="#s14"><span class="lab">14 · Multiagente · emergencia</span><span class="dot"></span></a>
+  <a href="#s15"><span class="lab">15 · Cinco preguntas</span><span class="dot"></span></a>
+  <a href="#s16"><span class="lab">16 · Cierre · magazine</span><span class="dot"></span></a>
+  <a href="#s17"><span class="lab">17 · Referencias</span><span class="dot"></span></a>
+  <a href="#s18"><span class="lab">18 · Q&amp;A</span><span class="dot"></span></a>
+</nav>
+
+<main>
+
+<!-- 01 · COVER -->
+<section class="slide cover" id="s1">
+  <span class="eyebrow-square">Ponencia · 3 de junio de 2026</span>
+  <h1 class="h-display">CUANDO METIMOS<br>EL MUNDO EN<br><span class="acc">UNA MÁQUINA.</span></h1>
+  <p class="h-claim"><em>Reputación, marcas e instituciones ante los modelos de lenguaje.</em></p>
+  <div class="foot">
+    <div class="meta-block">
+      <span>Ponente</span>
+      <span class="v">Carlos Ortet</span>
+      <span>Director Innovación · Col·legi RR.PP., Màrqueting i Publicitat</span>
+      <span>Prof. visitante UAB · IIIA-CSIC</span>
+    </div>
+    <div class="meta-block right">
+      <span>Sesión</span>
+      <span class="v">40-45 min + Q&amp;A</span>
+      <span>Aproximación empírica</span>
+      <span>El marco interpretativo es de la sala</span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · ENCUADRE · MAGAZINE QUOTE -->
+<section class="slide magazine-quote" id="s2">
+  <span class="eyebrow-square">Antes de empezar</span>
+  <p class="mag-quote">El objetivo es aportar <b>observación de campo</b> sobre un fenómeno que ya está afectando al objeto que <em>ustedes estudian.</em></p>
+  <p class="mag-sub">Las relaciones públicas son una disciplina con un siglo de tradición y un cuerpo teórico consolidado. No vengo a discutir ninguno de sus marcos: vengo desde la observación empírica. El marco interpretativo es de ustedes.</p>
+  <p class="mag-attr">Carlos Ortet · Encuadre de la ponencia</p>
+</section>
+
+<!-- 03 · MARCO CONCEPTUAL · 3 pillars -->
+<section class="slide" id="s3">
+  <span class="eyebrow-square">Marco conceptual · desde dónde se mira</span>
+  <h2 class="h-claim">Tres tradiciones académicas que orientan <b>esta observación.</b></h2>
+  <p class="sub">No pretendo añadir a ninguna; me apoyo en ellas para nombrar lo que veo en campo.</p>
+
+  <div class="pillars-3">
+    <div class="p">
+      <span class="pl">Tradición 01</span>
+      <div class="pn">01</div>
+      <h4>Mediación y esfera pública</h4>
+      <p>Tradición latinoamericana y europea de los estudios de mediación y de la esfera pública como espacio en transformación tecnológica.</p>
+      <p class="cite">Martín-Barbero (1987) · Verón (1987) · Habermas (1962/1989)</p>
+    </div>
+    <div class="p">
+      <span class="pl">Tradición 02</span>
+      <div class="pn">02</div>
+      <h4>Agentes no humanos en redes</h4>
+      <p><em>Actor-Network Theory</em> para pensar entidades técnicas como <b>actuantes</b>, no como herramientas. Aplicada recientemente a sistemas algorítmicos.</p>
+      <p class="cite">Latour (2005) · Callon (1986) · Just &amp; Latzer (2017) · Bucher (2018)</p>
+    </div>
+    <div class="p">
+      <span class="pl">Tradición 03</span>
+      <div class="pn">03</div>
+      <h4>Públicos y relación OPR</h4>
+      <p>La teoría situacional del problem solving y la teoría dialógica de las RR.PP. como referencia disciplinar para discutir la incorporación de agentes algorítmicos.</p>
+      <p class="cite">Kim &amp; Grunig (2011) · Kent &amp; Taylor (1998, 2002)</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · TESIS / DESPLAZAMIENTO · MAGAZINE + SVG -->
+<section class="slide" id="s4" style="background:var(--pg-paper-green);justify-content:flex-start">
+  <span class="eyebrow-square">La observación central</span>
+  <h2 class="h-claim" style="font-family:var(--f-body);font-style:italic;font-weight:200;font-size:clamp(28px,3.6vw,46px);line-height:1.18;color:var(--black);max-width:32ch;margin-bottom:14px">Cuando un ciudadano pregunta a un modelo qué piensa de una marca, no recibe información: <b style="font-style:normal;font-weight:800;color:var(--green-deep)">recibe una posición.</b></h2>
+  <p class="sub" style="max-width:64ch;margin-bottom:22px">Esa posición se forma sin intervención humana directa, se replica a escala y condiciona percepción, reputación y decisión <em>antes</em> de que las RR.PP. hayan tenido ocasión de actuar.</p>
+
+  <!-- SVG · pipeline antiguo vs nuevo -->
+  <svg viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:1140px;height:auto;margin-top:6px" aria-label="Diagrama: pipeline clásico vs pipeline algorítmico de formación de la reputación" role="img">
+    <!-- PIPELINE ANTIGUO -->
+    <text x="0" y="18" font-family="Roboto Mono, monospace" font-size="11" letter-spacing="2" font-weight="600" fill="#7a7a7a">PIPELINE CLÁSICO · MEDIACIÓN HUMANA</text>
+    <g opacity="0.55">
+      <rect x="0" y="38" width="130" height="50" fill="none" stroke="#a8a8a8" stroke-width="1"/>
+      <text x="65" y="69" text-anchor="middle" font-family="Hepta Slab, serif" font-size="14" fill="#5c5c5c">Ciudadano</text>
+      <line x1="135" y1="63" x2="172" y2="63" stroke="#a8a8a8" stroke-width="1"/>
+      <polygon points="172,58 185,63 172,68" fill="#a8a8a8"/>
+      <rect x="190" y="38" width="100" height="50" fill="none" stroke="#a8a8a8" stroke-width="1"/>
+      <text x="240" y="69" text-anchor="middle" font-family="Hepta Slab, serif" font-size="14" fill="#5c5c5c">Medio</text>
+      <line x1="295" y1="63" x2="332" y2="63" stroke="#a8a8a8" stroke-width="1"/>
+      <polygon points="332,58 345,63 332,68" fill="#a8a8a8"/>
+      <rect x="350" y="38" width="130" height="50" fill="none" stroke="#a8a8a8" stroke-width="1"/>
+      <text x="415" y="69" text-anchor="middle" font-family="Hepta Slab, serif" font-size="14" fill="#5c5c5c">Periodista</text>
+      <line x1="485" y1="63" x2="522" y2="63" stroke="#a8a8a8" stroke-width="1"/>
+      <polygon points="522,58 535,63 522,68" fill="#a8a8a8"/>
+      <rect x="540" y="38" width="150" height="50" fill="none" stroke="#a8a8a8" stroke-width="1"/>
+      <text x="615" y="69" text-anchor="middle" font-family="Hepta Slab, serif" font-size="14" fill="#5c5c5c">Información</text>
+      <line x1="695" y1="63" x2="732" y2="63" stroke="#a8a8a8" stroke-width="1"/>
+      <polygon points="732,58 745,63 732,68" fill="#a8a8a8"/>
+      <rect x="750" y="38" width="120" height="50" fill="none" stroke="#a8a8a8" stroke-width="1"/>
+      <text x="810" y="69" text-anchor="middle" font-family="Hepta Slab, serif" font-size="14" fill="#5c5c5c">Opinión</text>
+    </g>
+
+    <!-- Separador -->
+    <line x1="0" y1="140" x2="1200" y2="140" stroke="#dcdcdc" stroke-width="1" stroke-dasharray="3 3"/>
+
+    <!-- PIPELINE NUEVO -->
+    <text x="0" y="178" font-family="Roboto Mono, monospace" font-size="12" letter-spacing="2" font-weight="700" fill="#0E7A1F">PIPELINE NUEVO · MEDIACIÓN ALGORÍTMICA</text>
+    <rect x="0" y="200" width="160" height="60" fill="none" stroke="#0E7A1F" stroke-width="2"/>
+    <text x="80" y="238" text-anchor="middle" font-family="Hepta Slab, serif" font-size="16" font-weight="600" fill="#0E7A1F">Ciudadano</text>
+    <line x1="165" y1="230" x2="425" y2="230" stroke="#0E7A1F" stroke-width="2"/>
+    <polygon points="425,222 442,230 425,238" fill="#0E7A1F"/>
+    <rect x="450" y="200" width="220" height="60" fill="#0E7A1F" stroke="#0E7A1F" stroke-width="2"/>
+    <text x="560" y="238" text-anchor="middle" font-family="Hepta Slab, serif" font-size="18" font-weight="700" fill="#ffffff">Modelo de lenguaje</text>
+    <line x1="675" y1="230" x2="935" y2="230" stroke="#0E7A1F" stroke-width="2"/>
+    <polygon points="935,222 952,230 935,238" fill="#0E7A1F"/>
+    <rect x="960" y="200" width="160" height="60" fill="#E9F9EC" stroke="#0E7A1F" stroke-width="2"/>
+    <text x="1040" y="238" text-anchor="middle" font-family="Hepta Slab, serif" font-size="17" font-weight="700" fill="#0E7A1F">Posición</text>
+
+    <!-- Asimetrías al pie del modelo -->
+    <text x="450" y="290" font-family="Roboto Mono, monospace" font-size="11" font-weight="600" fill="#5c5c5c">• Sin editor responsable</text>
+    <text x="450" y="307" font-family="Roboto Mono, monospace" font-size="11" font-weight="600" fill="#5c5c5c">• No estable en el tiempo</text>
+    <text x="752" y="290" font-family="Roboto Mono, monospace" font-size="11" font-weight="600" fill="#5c5c5c">• No diferencia entre públicos</text>
+    <text x="752" y="307" font-family="Roboto Mono, monospace" font-size="11" font-weight="600" fill="#5c5c5c">• No segmentable como audiencia</text>
+  </svg>
+</section>
+
+<!-- 05 · CUATRO OBSERVACIONES · HAIRLINE TABLE -->
+<section class="slide table-slide" id="s5">
+  <span class="eyebrow-square">Observaciones empíricas · patrones consistentes</span>
+  <h2 class="h-claim">Cuatro patrones aparecen sistemáticamente en sectores <b>muy distintos.</b></h2>
+
+  <table class="hairline">
+    <thead>
+      <tr><th style="width:80px">#</th><th style="width:32%">Patrón</th><th>Descripción y referencia</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="num">01</td>
+        <td class="label">Heterogeneidad sistemática entre motores</td>
+        <td>El mismo prompt sobre la misma organización devuelve <b>juicios distintos y consistentes</b> entre modelos. La reputación medida es plural, no única. <em>Observado en cinco motores de propósito general, 2025-2026.</em></td>
+      </tr>
+      <tr>
+        <td class="num">02</td>
+        <td class="label">Toma de posición ante comparativos</td>
+        <td>Los modelos rara vez se abstienen ante <em>"¿cuál es mejor, A o B?"</em>. Eligen, y la elección sigue patrones reproducibles, no aleatorios.</td>
+      </tr>
+      <tr>
+        <td class="num">03</td>
+        <td class="label">Validación implícita de premisas</td>
+        <td>Una asunción crítica raramente es corregida por el modelo: la premisa se acepta y se desarrolla. <b>Efecto cercano al <em>anchoring</em></b> aplicado a marcos reputacionales. <span class="cite">Tversky &amp; Kahneman (1974)</span></td>
+      </tr>
+      <tr>
+        <td class="num">04</td>
+        <td class="label">Volumen ya no marginal</td>
+        <td>Bloques generativos en búsqueda (AI Overviews) en <b>~21%</b> de búsquedas globales y <b>&gt;30%</b> en YMYL (salud, finanzas, legal). Crecimiento <b>&gt;70%</b> YoY. <span class="cite">BrightEdge (2026) · Search Engine Land (2026)</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 06 · VOLUMEN · HERO STATS -->
+<section class="slide hero-block bg-section" id="s6">
+  <span class="eyebrow-square">El espacio donde ocurre</span>
+  <h2 class="h-claim">El descubrimiento generativo <b>ya no es marginal.</b></h2>
+  <p class="sub">Los instrumentos clásicos del campo —análisis de medios, encuestas de imagen, <em>clipping</em>— no muestrean este espacio. <b>El espacio donde se forma la reputación se ha desplazado más rápido de lo que los instrumentos pueden seguir.</b></p>
+
+  <div class="hero-stats">
+    <div class="s"><div class="l">Búsquedas globales con AIO</div><div class="v">~21%</div><div class="n">Bloques generativos en Google.</div></div>
+    <div class="s"><div class="l">Sectores YMYL</div><div class="v">&gt;30%</div><div class="n">Salud · Finanzas · Legal.</div></div>
+    <div class="s"><div class="l">Crecimiento interanual</div><div class="v">&gt;70%</div><div class="n">Velocidad de adopción.</div></div>
+    <div class="s"><div class="l">Equivalencia exposición</div><div class="v neutral">1 : 3-4</div><div class="n">1 consulta LLM ≈ 3-4 AIO.</div></div>
+  </div>
+</section>
+
+<!-- 07 · METODOLOGÍA · PIPELINE IMAGEN -->
+<section class="slide" id="s7" style="background:var(--white);justify-content:flex-start">
+  <span class="eyebrow-square">Metodología · auditoría multimotor</span>
+  <h2 class="h-claim" style="margin-bottom:10px">Cómo se han obtenido los datos que <b>siguen.</b></h2>
+  <p class="sub" style="margin-bottom:14px">Brand profile → espacio semántico saturado (~10K prompts) → simulación de personae sobre cinco motores → tracking de KPIs y extracción de insights accionables.</p>
+
+  <!-- Pipeline GEORadar -->
+  <figure style="margin:4px 0 12px;background:var(--pg-paper-green);border:1px solid var(--green-line);padding:14px 22px;text-align:center">
+    <img src="assets/georadar-pipeline.png" alt="Pipeline metodológico: brand profile → semantic brand space generation con saturation point a ~10K prompts y knowledge DB → multiagent GEO platform con personae simulation framework, AI agents team, LLMs, internet e information diet → KPIs tracking y actionable insights" style="max-width:100%;height:auto;display:block;margin:0 auto" />
+    <figcaption style="margin-top:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;font-weight:600;color:var(--green-deep)">Esquema operativo · multiagent GEO platform</figcaption>
+  </figure>
+
+  <!-- Stats · volumen de datos acumulados -->
+  <div class="hero-stats" style="margin-top:6px">
+    <div class="s">
+      <div class="l">Menciones</div>
+      <div class="v">12 M+</div>
+      <div class="n">de marcas e instituciones analizadas</div>
+    </div>
+    <div class="s">
+      <div class="l">Atributos</div>
+      <div class="v">100 M+</div>
+      <div class="n">extraídos de respuestas IA</div>
+    </div>
+    <div class="s">
+      <div class="l">Conversaciones</div>
+      <div class="v">1 M+</div>
+      <div class="n">procesadas y clasificadas</div>
+    </div>
+    <div class="s">
+      <div class="l">Personae</div>
+      <div class="v">1.000+</div>
+      <div class="n">customer personae sintéticos</div>
+    </div>
+  </div>
+  <p style="font-family:var(--f-body);font-size:13.5px;color:var(--grey-700);margin-top:10px;line-height:1.55;max-width:none"><b style="color:var(--green-deep)">Combustible para el entrenamiento de nuestros agentes.</b> Cifras agregadas desde 2024; ningún cliente individual figura en este recuento. <span style="color:var(--grey-500);font-style:italic">Limitaciones: estudios encargados (no muestra aleatoria), datos no liberados a revisión por pares, <em>black-box</em> de los modelos.</span></p>
+</section>
+
+<!-- 08 · TRES CASOS · H-SCROLL HORIZONTAL -->
+<section class="slide h-scroll" id="s8">
+  <span class="eyebrow-square">Casos anonimizados · auditorías 2025-2026</span>
+  <h2 class="h-claim" style="margin-bottom:6px">Patrones consistentes en sectores y públicos <b>muy distintos.</b></h2>
+  <div class="h-scroll-hint">Desplazar →</div>
+  <div class="h-scroll-track">
+
+    <div class="panel intro">
+      <span class="ptag">Casos · 3 sectores</span>
+      <h3>Tres auditorías reales, <b>tres patrones distintos</b>, una misma lógica subyacente.</h3>
+      <p>Educación superior, transporte regular e institución pública europea. Marcas anonimizadas; los patrones, no.</p>
+      <p class="interp"><b>Lectura común:</b> la reputación medida en el espacio generativo no se comporta como la medida en medios o panel clásicos.</p>
+    </div>
+
+    <div class="panel">
+      <span class="ptag">Caso A · Educación superior</span>
+      <div class="pn">28%</div>
+      <span class="pnum-lbl">Citación como referente</span>
+      <h3>Universidad pública europea, <b>top-200 QS.</b></h3>
+      <p>La IA la cita como referente académico solo en el <b>28%</b> de queries internacionales de captación en ingeniería. <b>Autoridad académica medida: 47/100.</b></p>
+      <p class="interp"><b>Lectura:</b> el ranking tradicional no garantiza autoridad académica en el espacio generativo. La paridad narrativa entre idiomas diverge significativamente.</p>
+    </div>
+
+    <div class="panel">
+      <span class="ptag">Caso B · Transporte regular</span>
+      <div class="pn">2/5</div>
+      <span class="pnum-lbl">Motores con SoV opuesto</span>
+      <h3>Operador europeo, <b>presencia en 50+ mercados.</b></h3>
+      <p>Dos de los cinco motores asignan a la marca un <em>share of voice</em> opuesto frente al mismo competidor. Sentimiento agregado entre <b>+0,42 y −0,18</b> según el motor.</p>
+      <p class="interp"><b>Lectura:</b> medir <em>la reputación</em> en singular es estadísticamente inexacto. Hay tantas reputaciones como motores; el agregado simple oculta esa varianza.</p>
+    </div>
+
+    <div class="panel">
+      <span class="ptag">Caso C · Institución pública</span>
+      <div class="pn">4/5</div>
+      <span class="pnum-lbl">Premisas no corregidas</span>
+      <h3>Organismo regulador, <b>alta exposición 2025.</b></h3>
+      <p>En 4 de 5 motores, una premisa crítica errónea introducida en el prompt fue <b>aceptada y desarrollada</b> sin corrección por el modelo.</p>
+      <p class="interp"><b>Lectura:</b> los marcos críticos pre-cargados en el prompt se convierten en marcos confirmados por la respuesta. Efecto acumulativo sobre la reputación medida.</p>
+    </div>
+
+    <div class="panel outro">
+      <span class="ptag">Síntesis · tres en uno</span>
+      <h3>Tres sectores, una misma <b>nueva mediación.</b></h3>
+      <p>Reputación plural, no única. Toma de posición sistemática. Premisas críticas que se confirman solas. Y todo ello fuera del alcance de los instrumentos clásicos del campo.</p>
+      <p class="interp"><b>Implicación para el campo:</b> hace falta repensar instrumentos de observación, no solo marcos teóricos.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 09 · TRES ASIMETRÍAS · PILLARS -->
+<section class="slide" id="s9">
+  <span class="eyebrow-square">Reconfiguración del mapa de agentes</span>
+  <h2 class="h-claim">Un agente no humano que <b>no encaja</b> en el ecosistema clásico.</h2>
+  <p class="sub">El modelo de lenguaje no es canal, ni medio, ni público. Ocupa simultáneamente tres funciones del esquema clásico: <b>intermediario, portavoz y audiencia</b>. Y presenta tres asimetrías estructurales. <span class="cite">Latour (2005) · ANT</span></p>
+
+  <div class="pillars-3">
+    <div class="p">
+      <span class="pl">Asimetría 01</span>
+      <h4>Sin responsable editorial</h4>
+      <p>No hay interlocutor al que dirigir rectificación, aclaración o desmentido. <b>La doctrina clásica de gestión de medios no opera.</b></p>
+      <p class="cite">¿Cabe pensar un derecho de rectificación frente a un sistema sin editor?</p>
+    </div>
+    <div class="p">
+      <span class="pl">Asimetría 02</span>
+      <h4>No estable en el tiempo</h4>
+      <p>La respuesta de hoy puede no ser la de mañana, sin trazabilidad pública. <b>La reputación medida es volátil por construcción.</b></p>
+      <p class="cite">Implica revisar nociones de <em>permanencia</em> y <em>consistencia</em>.</p>
+    </div>
+    <div class="p">
+      <span class="pl">Asimetría 03</span>
+      <h4>No diferencia entre públicos</h4>
+      <p>Emite la misma respuesta al periodista, regulador, inversor, activista y ciudadano. <b>Colapsa la segmentación clásica de públicos.</b></p>
+      <p class="cite">Kim &amp; Grunig (2011) — la teoría situacional puesta a prueba.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · PREGUNTA ABIERTA · MANIFESTO DEEP -->
+<section class="slide manifesto" id="s10">
+  <span class="eyebrow-square">Una pregunta para la sala</span>
+  <p class="manifesto-claim">¿Cómo se incorpora un agente con estas propiedades a los marcos clásicos de públicos y <b>stakeholders</b> sin desbordar la coherencia teórica del campo?</p>
+  <p class="manifesto-sub">No es una pregunta retórica. No es una pregunta para el ponente. Es una pregunta del campo y para el campo, que dejo flotando antes de continuar.</p>
+  <p class="manifesto-attr">Bloque 3 · pausa deliberada</p>
+</section>
+
+<!-- 11 · DOS DESPLAZAMIENTOS · COMPARE-SPLIT ANTES/DESPUÉS -->
+<section class="slide compare-split" id="s11">
+  <div class="cs-side before">
+    <span class="cs-tag">Hasta ahora · mediación informativa</span>
+    <div class="cs-display">ANTES</div>
+    <p class="cs-claim">La reputación se mide por la <b>opinión que se forma una persona.</b></p>
+    <p class="cs-body">Los marcos clásicos del campo —imagen, percepción, actitud, evaluación afectiva— se han construido sobre el supuesto de un sujeto humano que recibe, interpreta y juzga. El ciclo termina en la conciencia individual o agregada del público.</p>
+  </div>
+  <div class="cs-divider"></div>
+  <div class="cs-side after">
+    <span class="cs-tag">Lo que viene · mediación decisional</span>
+    <div class="cs-display">DESPUÉS</div>
+    <p class="cs-claim">La reputación se mide por la <b>decisión que toma un agente en su lugar.</b></p>
+    <p class="cs-body">Agentes autónomos comparan, descartan, contratan y recomiendan por las personas. La implicación está más cerca del marco de <em>agency</em> (Giddens, 1984) que del marco clásico de percepción / imagen. <b>Las consecuencias son materiales, no solo simbólicas.</b></p>
+  </div>
+</section>
+
+<!-- 12 · SIMULACIÓN · VISION-CARD -->
+<section class="slide vision-card" id="s12">
+  <span class="eyebrow-square">Simulación de públicos · posibilidades y cautelas</span>
+  <h2 class="h-claim" style="max-width:none">Una línea de trabajo, <b>no una herramienta lista.</b></h2>
+  <article class="vision-hero-card">
+    <div class="vision-hero-card__content">
+      <span class="eyebrow-square">Posibilidades</span>
+      <h3 class="vision-hero-card__claim">Anticipar reacciones, ensayar mensajes y explorar escenarios en <b>públicos sintéticos.</b></h3>
+      <p style="font-family:var(--f-body);font-size:14.5px;line-height:1.6;color:var(--grey-700);max-width:42ch">Aplicaciones potenciales para el campo: investigación social exploratoria, diseño estratégico previo a la actuación, anticipación de escenarios de crisis. <span class="cite">Park et al. (2023, 2024) · Argyle et al. (2023)</span></p>
+    </div>
+    <div class="vision-hero-card__visual">
+      <div>
+        <div style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.6px;color:var(--green-deep);font-weight:600;margin-bottom:14px">Cautelas declaradas</div>
+        <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.6;color:var(--black);margin-bottom:10px;text-align:left;font-weight:600">Validez externa por demostrar.</p>
+        <p style="font-family:var(--f-body);font-size:12.5px;line-height:1.55;color:var(--grey-700);margin-bottom:14px;text-align:left">La capacidad predictiva sobre comportamiento real no está consolidada. Riesgo de <em>ilusión de fiabilidad.</em></p>
+        <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.6;color:var(--black);margin-bottom:10px;text-align:left;font-weight:600">Sesgo de representación.</p>
+        <p style="font-family:var(--f-body);font-size:12.5px;line-height:1.55;color:var(--grey-700);margin-bottom:14px;text-align:left">Las simulaciones sobre-representan las poblaciones del corpus de entrenamiento.</p>
+        <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.6;color:var(--black);margin-bottom:10px;text-align:left;font-weight:600">Sustitución prematura.</p>
+        <p style="font-family:var(--f-body);font-size:12.5px;line-height:1.55;color:var(--grey-700);text-align:left">Reemplazar métodos cualitativos consolidados es una tentación que conviene resistir.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- 13 · DOS PROYECTOS · NESTLÉ + INTPA -->
+<section class="slide" id="s13">
+  <span class="eyebrow-square">Lecciones metodológicas desde el campo</span>
+  <h2 class="h-claim">Dos proyectos. <b>Dos lecciones</b> que aún resuenan.</h2>
+  <p class="sub">Antes de cerrar con preguntas, dos casos recientes donde el problema de campo nos enseñó más que la literatura. Se comparte método y aprendizaje, no resultados de cliente.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-strong);border:1px solid var(--line-strong);margin-top:18px">
+
+    <!-- NESTLÉ CARD -->
+    <div style="background:var(--white);padding:28px 26px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:600">Caso 01 · Consumer · alimentación infantil</span>
+      <h3 style="font-family:var(--f-body);font-weight:300;font-size:28px;line-height:1.15;color:var(--black);margin:0">Multinacional global. <b style="font-weight:800;color:var(--green-deep)">Crisis 2026.</b></h3>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 4px">
+        <div><div style="font-family:var(--f-display);font-size:42px;color:var(--green-deep);line-height:.9">21</div><div style="font-family:var(--f-mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey-500);margin-top:4px;line-height:1.3">Personae<br>sintéticas</div></div>
+        <div><div style="font-family:var(--f-display);font-size:42px;color:var(--green-deep);line-height:.9">3</div><div style="font-family:var(--f-mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey-500);margin-top:4px;line-height:1.3">Territorios<br>distintos</div></div>
+        <div><div style="font-family:var(--f-display);font-size:42px;color:var(--green-deep);line-height:.9">19K+</div><div style="font-family:var(--f-mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey-500);margin-top:4px;line-height:1.3">Fuentes<br>atribuidas</div></div>
+      </div>
+
+      <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.55;color:var(--grey-700);margin:0">Personae cruzadas <b>profesionales de pediatría + padres</b>. Espacio semántico construido para todas las submarcas y los competidores del sector.</p>
+
+      <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.55;color:var(--grey-700);padding-top:12px;border-top:1px solid var(--line);margin:0"><b>Lección:</b> el sentimiento agregado no clasificaba las conversaciones por <em>objetivo comunicacional</em>. Hubo que pasar a <b>análisis de intención</b>. Para predecir efecto reputacional, la intención importa más que la carga afectiva.</p>
+    </div>
+
+    <!-- INTPA CARD -->
+    <div style="background:var(--pg-paper-green);padding:28px 26px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:600">Caso 02 · Institucional · cooperación internacional</span>
+      <h3 style="font-family:var(--f-body);font-weight:300;font-size:28px;line-height:1.15;color:var(--black);margin:0">Organismo europeo. <b style="font-weight:800;color:var(--green-deep)">Diáspora y país-origen.</b></h3>
+
+      <p style="font-family:var(--f-body);font-size:14px;line-height:1.55;color:var(--grey-700);margin:4px 0 0"><b>Objeto:</b> modelado de la población de El Salvador y su diáspora para un organismo europeo de cooperación internacional.</p>
+
+      <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.55;color:var(--grey-700);margin:0"><b>Diseño:</b> simulación poblacional con personae sintéticas representando tanto el país-origen como las comunidades transnacionales en países-receptores. Cobertura validada por algoritmo de completitud semántica.</p>
+
+      <p style="font-family:var(--f-body);font-size:13.5px;line-height:1.55;color:var(--grey-700);padding-top:12px;border-top:1px solid var(--green-line);margin:0"><b>Lección:</b> la diáspora opera como un <em>público transnacional con dinámica propia</em>. Sus respuestas no coinciden con las del país-origen ni del receptor. Capturarlo exige <b>modelado poblacional</b>, no segmentación clásica.</p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:18px;padding:16px 22px;border:1px solid var(--green-deep);background:var(--green-soft);font-family:var(--f-body);font-size:13.5px;line-height:1.55;color:var(--grey-700)">
+    <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:700;display:block;margin-bottom:6px">Dos consecuencias técnicas comunes</span>
+    En un sistema estocástico como los LLMs, la representatividad exige volumen alto y cobertura semántica completa: ha hecho falta desarrollar <b>algoritmos de completitud semántica</b> que detectan el punto de saturación. Y la <b>simulación de personae a gran volumen no es lujo</b>, es condición de posibilidad para extraer conclusiones; sin ella, los hallazgos son anecdóticos.
+  </div>
+</section>
+
+<!-- 14 · MULTIAGENTE Y EMERGENCIA · CON SVG -->
+<section class="slide" id="s14">
+  <span class="eyebrow-square">Arquitecturas multiagente · simular lo que emerge</span>
+  <h2 class="h-claim">Multiagente. Simular lo que <em>emerge</em>, no solo lo que <b>está.</b></h2>
+  <p class="sub" style="margin-bottom:14px">La simulación con un solo agente sustituye al respondente individual. Las arquitecturas multiagente sustituyen al ecosistema entero donde se forma la opinión. Lo que aparece en el segundo nivel no es deducible del primero. La literatura llama a esto <b>emergencia</b>.</p>
+
+  <!-- SVG · SCHELLING + SMALLVILLE -->
+  <svg viewBox="0 0 1200 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:1140px;height:auto;margin:6px 0 10px" aria-label="Diagrama de emergencia: modelo de Schelling (1971) y agentes generativos (Park et al. 2023)" role="img">
+
+    <!-- ====== LEFT · SCHELLING ====== -->
+    <text x="0" y="16" font-family="Roboto Mono, monospace" font-size="10" letter-spacing="2" font-weight="700" fill="#0E7A1F">SCHELLING · 1971</text>
+    <text x="0" y="38" font-family="Hepta Slab, serif" font-size="14" font-weight="600" fill="#1a1a1a">Reglas locales → segregación emergente</text>
+
+    <!-- Initial grid mixed (6x6) -->
+    <text x="0" y="62" font-family="Roboto Mono, monospace" font-size="9" letter-spacing="1.4" fill="#7a7a7a">INICIAL · MEZCLA</text>
+    <g transform="translate(0, 70)">
+      <!-- Row 0 -->
+      <circle cx="10" cy="10" r="8" fill="#0E7A1F"/><circle cx="34" cy="10" r="8" fill="#1a1a1a"/><circle cx="58" cy="10" r="8" fill="#0E7A1F"/><circle cx="82" cy="10" r="8" fill="#1a1a1a"/><circle cx="106" cy="10" r="8" fill="#0E7A1F"/><circle cx="130" cy="10" r="8" fill="#1a1a1a"/>
+      <!-- Row 1 -->
+      <circle cx="10" cy="34" r="8" fill="#1a1a1a"/><circle cx="34" cy="34" r="8" fill="#0E7A1F"/><circle cx="58" cy="34" r="8" fill="#1a1a1a"/><circle cx="82" cy="34" r="8" fill="#0E7A1F"/><circle cx="106" cy="34" r="8" fill="#1a1a1a"/><circle cx="130" cy="34" r="8" fill="#0E7A1F"/>
+      <!-- Row 2 -->
+      <circle cx="10" cy="58" r="8" fill="#0E7A1F"/><circle cx="34" cy="58" r="8" fill="#1a1a1a"/><circle cx="58" cy="58" r="8" fill="#0E7A1F"/><circle cx="82" cy="58" r="8" fill="#0E7A1F"/><circle cx="106" cy="58" r="8" fill="#1a1a1a"/><circle cx="130" cy="58" r="8" fill="#1a1a1a"/>
+      <!-- Row 3 -->
+      <circle cx="10" cy="82" r="8" fill="#1a1a1a"/><circle cx="34" cy="82" r="8" fill="#0E7A1F"/><circle cx="58" cy="82" r="8" fill="#1a1a1a"/><circle cx="82" cy="82" r="8" fill="#1a1a1a"/><circle cx="106" cy="82" r="8" fill="#0E7A1F"/><circle cx="130" cy="82" r="8" fill="#1a1a1a"/>
+      <!-- Row 4 -->
+      <circle cx="10" cy="106" r="8" fill="#0E7A1F"/><circle cx="34" cy="106" r="8" fill="#1a1a1a"/><circle cx="58" cy="106" r="8" fill="#0E7A1F"/><circle cx="82" cy="106" r="8" fill="#1a1a1a"/><circle cx="106" cy="106" r="8" fill="#0E7A1F"/><circle cx="130" cy="106" r="8" fill="#0E7A1F"/>
+      <!-- Row 5 -->
+      <circle cx="10" cy="130" r="8" fill="#1a1a1a"/><circle cx="34" cy="130" r="8" fill="#0E7A1F"/><circle cx="58" cy="130" r="8" fill="#1a1a1a"/><circle cx="82" cy="130" r="8" fill="#0E7A1F"/><circle cx="106" cy="130" r="8" fill="#1a1a1a"/><circle cx="130" cy="130" r="8" fill="#0E7A1F"/>
+    </g>
+
+    <!-- Arrow Schelling -->
+    <g transform="translate(166, 140)">
+      <line x1="0" y1="0" x2="34" y2="0" stroke="#0E7A1F" stroke-width="2"/>
+      <polygon points="34,-7 48,0 34,7" fill="#0E7A1F"/>
+    </g>
+
+    <!-- Emergent grid clustered (6x6) -->
+    <text x="225" y="62" font-family="Roboto Mono, monospace" font-size="9" letter-spacing="1.4" font-weight="700" fill="#0E7A1F">EMERGENTE · CLÚSTERES</text>
+    <g transform="translate(225, 70)">
+      <!-- Row 0 -->
+      <circle cx="10" cy="10" r="8" fill="#0E7A1F"/><circle cx="34" cy="10" r="8" fill="#0E7A1F"/><circle cx="58" cy="10" r="8" fill="#0E7A1F"/><circle cx="82" cy="10" r="8" fill="#1a1a1a"/><circle cx="106" cy="10" r="8" fill="#1a1a1a"/><circle cx="130" cy="10" r="8" fill="#1a1a1a"/>
+      <!-- Row 1 -->
+      <circle cx="10" cy="34" r="8" fill="#0E7A1F"/><circle cx="34" cy="34" r="8" fill="#0E7A1F"/><circle cx="58" cy="34" r="8" fill="#0E7A1F"/><circle cx="82" cy="34" r="8" fill="#1a1a1a"/><circle cx="106" cy="34" r="8" fill="#1a1a1a"/><circle cx="130" cy="34" r="8" fill="#1a1a1a"/>
+      <!-- Row 2 -->
+      <circle cx="10" cy="58" r="8" fill="#0E7A1F"/><circle cx="34" cy="58" r="8" fill="#0E7A1F"/><circle cx="58" cy="58" r="8" fill="#0E7A1F"/><circle cx="82" cy="58" r="8" fill="#1a1a1a"/><circle cx="106" cy="58" r="8" fill="#1a1a1a"/><circle cx="130" cy="58" r="8" fill="#1a1a1a"/>
+      <!-- Row 3 -->
+      <circle cx="10" cy="82" r="8" fill="#1a1a1a"/><circle cx="34" cy="82" r="8" fill="#1a1a1a"/><circle cx="58" cy="82" r="8" fill="#1a1a1a"/><circle cx="82" cy="82" r="8" fill="#0E7A1F"/><circle cx="106" cy="82" r="8" fill="#0E7A1F"/><circle cx="130" cy="82" r="8" fill="#0E7A1F"/>
+      <!-- Row 4 -->
+      <circle cx="10" cy="106" r="8" fill="#1a1a1a"/><circle cx="34" cy="106" r="8" fill="#1a1a1a"/><circle cx="58" cy="106" r="8" fill="#1a1a1a"/><circle cx="82" cy="106" r="8" fill="#0E7A1F"/><circle cx="106" cy="106" r="8" fill="#0E7A1F"/><circle cx="130" cy="106" r="8" fill="#0E7A1F"/>
+      <!-- Row 5 -->
+      <circle cx="10" cy="130" r="8" fill="#1a1a1a"/><circle cx="34" cy="130" r="8" fill="#1a1a1a"/><circle cx="58" cy="130" r="8" fill="#1a1a1a"/><circle cx="82" cy="130" r="8" fill="#0E7A1F"/><circle cx="106" cy="130" r="8" fill="#0E7A1F"/><circle cx="130" cy="130" r="8" fill="#0E7A1F"/>
+    </g>
+
+    <!-- Schelling caption -->
+    <text x="0" y="248" font-family="Hepta Slab, serif" font-style="italic" font-size="12.5" fill="#5c5c5c">
+      <tspan x="0" dy="0">Cada agente prefiere &gt;30% de vecinos similares.</tspan>
+      <tspan x="0" dy="16">Sin reglas globales, el sistema converge a segregación.</tspan>
+      <tspan x="0" dy="16">El resultado colectivo no está en <tspan font-weight="700" font-style="normal" fill="#0E7A1F">ningún agente individual.</tspan></tspan>
+    </text>
+
+    <!-- Vertical separator -->
+    <line x1="600" y1="0" x2="600" y2="320" stroke="#dcdcdc" stroke-width="1" stroke-dasharray="3 4"/>
+
+    <!-- ====== RIGHT · SMALLVILLE ====== -->
+    <g transform="translate(640, 0)">
+      <text x="0" y="16" font-family="Roboto Mono, monospace" font-size="10" letter-spacing="2" font-weight="700" fill="#0E7A1F">PARK ET AL. · 2023</text>
+      <text x="0" y="38" font-family="Hepta Slab, serif" font-size="14" font-weight="600" fill="#1a1a1a">Agentes LLM → dinámica social emergente</text>
+
+      <!-- Village frame -->
+      <rect x="0" y="56" width="500" height="200" fill="#F4FAF3" stroke="#74D898" stroke-width="1"/>
+      <text x="10" y="74" font-family="Roboto Mono, monospace" font-size="9" letter-spacing="1.4" font-weight="700" fill="#0E7A1F">SMALLVILLE · 25 AGENTES LLM</text>
+
+      <!-- 25 agents · 5x5 stylized layout with interactions -->
+      <!-- Connection lines (drawn first so dots overlay) -->
+      <g stroke="#0E7A1F" stroke-width="1" opacity="0.4">
+        <line x1="60" y1="120" x2="140" y2="120"/>
+        <line x1="140" y1="120" x2="220" y2="155"/>
+        <line x1="220" y1="155" x2="140" y2="190"/>
+        <line x1="60" y1="155" x2="140" y2="155"/>
+        <line x1="300" y1="120" x2="380" y2="155"/>
+        <line x1="380" y1="155" x2="460" y2="120"/>
+        <line x1="300" y1="190" x2="380" y2="190"/>
+        <line x1="380" y1="190" x2="460" y2="190"/>
+        <line x1="220" y1="120" x2="300" y2="155"/>
+        <line x1="60" y1="225" x2="140" y2="190"/>
+        <line x1="220" y1="225" x2="300" y2="225"/>
+      </g>
+
+      <!-- Agents · 5x5 grid -->
+      <!-- Row 1 -->
+      <circle cx="60" cy="120" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="140" cy="120" r="9" fill="#0E7A1F"/>
+      <circle cx="220" cy="120" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="300" cy="120" r="9" fill="#0E7A1F"/>
+      <circle cx="380" cy="120" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="460" cy="120" r="9" fill="#0E7A1F"/>
+      <!-- Row 2 -->
+      <circle cx="60" cy="155" r="9" fill="#0E7A1F"/>
+      <circle cx="140" cy="155" r="9" fill="#0E7A1F"/>
+      <circle cx="220" cy="155" r="9" fill="#1a1a1a"/>
+      <circle cx="300" cy="155" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="380" cy="155" r="9" fill="#1a1a1a"/>
+      <circle cx="460" cy="155" r="9" fill="#0E7A1F"/>
+      <!-- Row 3 -->
+      <circle cx="60" cy="190" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="140" cy="190" r="9" fill="#1a1a1a"/>
+      <circle cx="220" cy="190" r="9" fill="#0E7A1F"/>
+      <circle cx="300" cy="190" r="9" fill="#0E7A1F"/>
+      <circle cx="380" cy="190" r="9" fill="#0E7A1F"/>
+      <circle cx="460" cy="190" r="9" fill="#1a1a1a"/>
+      <!-- Row 4 -->
+      <circle cx="60" cy="225" r="9" fill="#1a1a1a"/>
+      <circle cx="140" cy="225" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+      <circle cx="220" cy="225" r="9" fill="#0E7A1F"/>
+      <circle cx="300" cy="225" r="9" fill="#0E7A1F"/>
+      <circle cx="380" cy="225" r="9" fill="#ffffff" stroke="#0E7A1F" stroke-width="2"/>
+
+      <!-- Smallville caption -->
+      <text x="0" y="290" font-family="Hepta Slab, serif" font-style="italic" font-size="12.5" fill="#5c5c5c">
+        <tspan x="0" dy="0">Sembrando UNA intención (organizar una fiesta de S. Valentín),</tspan>
+        <tspan x="0" dy="16">los agentes coordinan invitaciones, citas y asistencia conjunta.</tspan>
+        <tspan x="0" dy="16"><tspan font-weight="700" font-style="normal" fill="#0E7A1F">Emergencia social no programada.</tspan></tspan>
+      </text>
+    </g>
+
+    <!-- Bottom unified caption -->
+    <text x="0" y="340" font-family="Roboto Mono, monospace" font-size="10" letter-spacing="1.6" font-weight="600" fill="#5c5c5c">DOS GENERACIONES · UNA MISMA LÓGICA · EL TODO COLECTIVO NO ESTÁ EN NINGÚN AGENTE INDIVIDUAL</text>
+  </svg>
+
+  <!-- STRIP HORIZONTAL · fenómenos PR + estado actual -->
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:1px;background:var(--line-strong);border:1px solid var(--line-strong);margin-top:6px">
+    <div style="background:var(--white);padding:18px 22px">
+      <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:600;display:block;margin-bottom:8px">Fenómenos del campo PR que la emergencia permite explorar</span>
+      <p style="font-family:var(--f-body);font-size:13px;line-height:1.6;color:var(--grey-700);margin:0"><b>Cascadas reputacionales</b> · cómo un rumor se vuelve crisis. <b>Formación de boicots</b> y movilización activista. <b>Espirales de silencio</b> bajo condiciones controladas <span class="cite">(Noelle-Neumann, 1974)</span>. <b>Difusión y contradifusión</b> entre stakeholders interdependientes.</p>
+    </div>
+    <div style="background:var(--pg-paper-green);padding:18px 22px">
+      <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--green-deep);font-weight:600;display:block;margin-bottom:8px">Estado actual del trabajo propio</span>
+      <p style="font-family:var(--f-body);font-size:13px;line-height:1.6;color:var(--grey-700);margin:0">Ya operamos simulación de personae a gran volumen. Estamos en <b>piloto avanzado</b> con arquitecturas multiagente para insights de I+D y problemas reputacionales de gran capilaridad. La <b>validación rigurosa de precisión predictiva</b> todavía requiere meses. <em>Agenda, no herramienta lista.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · CINCO PREGUNTAS ABIERTAS -->
+<section class="slide" id="s15">
+  <span class="eyebrow-square">Cinco preguntas abiertas · no respuestas</span>
+  <h2 class="h-claim">Lo que el ponente <b>no sabe resolver.</b></h2>
+  <p class="sub">No traigo agenda de investigación a esta sala. Traigo cinco preguntas que dejo encima de la mesa como inquietudes para el debate.</p>
+
+  <ol class="questions-list">
+    <li>
+      <span class="ql">Medición</span>
+      <p>¿Qué instrumentos necesita la disciplina para <b>observar la reputación en el espacio generativo</b> con validez y replicabilidad?</p>
+    </li>
+    <li>
+      <span class="ql">Marco conceptual</span>
+      <p>¿Cómo se incorpora un agente no humano, opaco e inestable a los modelos clásicos de públicos y <em>stakeholders</em>?</p>
+    </li>
+    <li>
+      <span class="ql">Ética y deontología</span>
+      <p>¿Quién responde de la reputación formada por un modelo? ¿Cabe una <b>doctrina de derecho de rectificación</b> frente a un sistema sin editor?</p>
+    </li>
+    <li>
+      <span class="ql">Validez metodológica</span>
+      <p>¿Bajo qué condiciones la <b>simulación de públicos</b> puede considerarse evidencia legítima en investigación, y no artefacto?</p>
+    </li>
+    <li>
+      <span class="ql">Formación</span>
+      <p>¿Qué deben saber sobre todo esto los <b>futuros profesionales</b> que ustedes están formando ahora?</p>
+    </li>
+  </ol>
+</section>
+
+<!-- 14 · CIERRE · MAGAZINE QUOTE -->
+<section class="slide magazine-quote" id="s16">
+  <span class="eyebrow-square">Cierre</span>
+  <p class="mag-quote">No traigo <em>respuestas.</em> Traigo un fenómeno que ya está afectando al objeto que ustedes estudian, y la convicción de que las preguntas correctas se formulan mejor <b>desde esta sala</b> que desde la mía.</p>
+  <p class="mag-attr">Gracias por su atención</p>
+</section>
+
+<!-- 15 · REFERENCIAS -->
+<section class="slide" id="s17">
+  <span class="eyebrow-square">Referencias bibliográficas</span>
+  <h2 class="h-claim" style="font-size:clamp(28px,3.4vw,42px);margin-bottom:14px">Selección citada o aludida en la <b>ponencia.</b></h2>
+  <div class="refs-blog">
+    <div class="ref"><b>Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J., Rytting, C., &amp; Wingate, D.</b> (2023). Out of one, many: Using language models to simulate human samples. <em>Political Analysis</em>, 31(3), 337-351.</div>
+    <div class="ref"><b>Bucher, T.</b> (2018). <em>If…Then: Algorithmic Power and Politics.</em> Oxford University Press.</div>
+    <div class="ref"><b>Callon, M.</b> (1986). Some elements of a sociology of translation. En J. Law (Ed.), <em>Power, action and belief</em> (pp. 196-233). Routledge.</div>
+    <div class="ref"><b>Epstein, J. M.</b> (2006). <em>Generative social science: Studies in agent-based computational modeling.</em> Princeton University Press.</div>
+    <div class="ref"><b>Epstein, J. M., &amp; Axtell, R.</b> (1996). <em>Growing artificial societies: Social science from the bottom up.</em> MIT Press / Brookings.</div>
+    <div class="ref"><b>Giddens, A.</b> (1984). <em>The constitution of society: Outline of the theory of structuration.</em> Polity Press.</div>
+    <div class="ref"><b>Grunig, J. E., &amp; Hunt, T.</b> (1984). <em>Managing public relations.</em> Holt, Rinehart and Winston.</div>
+    <div class="ref"><b>Habermas, J.</b> (1962/1989). <em>The structural transformation of the public sphere.</em> MIT Press.</div>
+    <div class="ref"><b>Just, N., &amp; Latzer, M.</b> (2017). Governance by algorithms: Reality construction by algorithmic selection on the internet. <em>Media, Culture &amp; Society</em>, 39(2), 238-258.</div>
+    <div class="ref"><b>Kent, M. L., &amp; Taylor, M.</b> (1998). Building dialogic relationships through the WWW. <em>Public Relations Review</em>, 24(3), 321-334.</div>
+    <div class="ref"><b>Kent, M. L., &amp; Taylor, M.</b> (2002). Toward a dialogic theory of public relations. <em>Public Relations Review</em>, 28(1), 21-37.</div>
+    <div class="ref"><b>Kim, J.-N., &amp; Grunig, J. E.</b> (2011). Problem solving and communicative action: A situational theory of problem solving. <em>Journal of Communication</em>, 61(1), 120-149.</div>
+    <div class="ref"><b>Latour, B.</b> (2005). <em>Reassembling the social: An introduction to actor-network-theory.</em> Oxford University Press.</div>
+    <div class="ref"><b>Macy, M. W., &amp; Willer, R.</b> (2002). From factors to actors: Computational sociology and agent-based modeling. <em>Annual Review of Sociology</em>, 28, 143-166.</div>
+    <div class="ref"><b>Martín-Barbero, J.</b> (1987). <em>De los medios a las mediaciones.</em> Gustavo Gili.</div>
+    <div class="ref"><b>Noelle-Neumann, E.</b> (1974). The spiral of silence: A theory of public opinion. <em>Journal of Communication</em>, 24(2), 43-51.</div>
+    <div class="ref"><b>Park, J. S., O'Brien, J. C., Cai, C. J., Morris, M. R., Liang, P., &amp; Bernstein, M. S.</b> (2023). Generative agents: Interactive simulacra of human behavior. <em>UIST '23</em>. ACM.</div>
+    <div class="ref"><b>Park, J. S., et al.</b> (2024). Generative agent simulations of 1,000 people. <em>arXiv:2411.10109.</em></div>
+    <div class="ref"><b>Schelling, T. C.</b> (1971). Dynamic models of segregation. <em>Journal of Mathematical Sociology</em>, 1(2), 143-186.</div>
+    <div class="ref"><b>Tversky, A., &amp; Kahneman, D.</b> (1974). Judgment under uncertainty: Heuristics and biases. <em>Science</em>, 185(4157), 1124-1131.</div>
+    <div class="ref"><b>Verón, E.</b> (1987). <em>La semiosis social.</em> Gedisa.</div>
+    <div class="ref"><b>Ortet, C.</b> (2025). Generative AI and strategic brand positioning. <em>Harvard Deusto Business Review.</em></div>
+  </div>
+</section>
+
+<!-- 16 · Q&A · CLOSING -->
+<section class="slide closing" id="s18">
+  <span class="eyebrow-square">Coloquio</span>
+  <h1 class="h-display">Q &amp; A.<br><span class="acc">DESACUERDOS</span><br>BIENVENIDOS.</h1>
+  <p class="closing-sub">Cualquier pregunta, matiz o desacuerdo será bienvenido. Las preguntas más útiles para el ponente serán las que <b>cuestionen sus propios supuestos</b>, no las que los confirmen.</p>
+
+  <div class="contact">
+    <div class="col">
+      <div class="l">Ponente</div>
+      <p><strong>Carlos Ortet</strong></p>
+      <p class="small">Director de Innovación · Col·legi Oficial de Relacions Públiques, Màrqueting i Publicitat de Catalunya</p>
+    </div>
+    <div class="col">
+      <div class="l">Afiliación académica</div>
+      <p>Universitat Autònoma de Barcelona</p>
+      <p class="small">Profesor visitante · Director TFM/TFG · IIIA-CSIC (Instituto de Investigación en Inteligencia Artificial)</p>
+    </div>
+    <div class="col">
+      <div class="l">Publicación reciente</div>
+      <p><em>Generative AI and strategic brand positioning</em></p>
+      <p class="small">Harvard Deusto Business Review · 2025</p>
+    </div>
+  </div>
+
+  <p style="margin-top:18px;font-family:var(--f-body);font-style:italic;font-size:12.5px;color:var(--grey-500);max-width:80ch;line-height:1.5">El trabajo de campo descrito procede de proyectos realizados desde la plataforma <strong style="color:var(--green-deep);font-style:normal;font-weight:600">GEORadar</strong> (498A · 498as.com).</p>
+</section>
+
+</main>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const cur=document.getElementById('cur');
+const total=document.getElementById('total');
+const links=document.querySelectorAll('.side-nav a');
+total.textContent=String(slides.length).padStart(2,'0');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      const idx=Array.from(slides).indexOf(e.target);
+      cur.textContent=String(idx+1).padStart(2,'0');
+      links.forEach(l=>l.classList.remove('active'));
+      if(links[idx]) links[idx].classList.add('active');
+    }
+  });
+},{threshold:.4});
+slides.forEach(s=>io.observe(s));
+</script>
+
+</body>
+</html>

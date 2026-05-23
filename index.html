@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cuando metimos el mundo en una máquina · Carlos Ortet · 3 de junio de 2026</title>
+<meta name="description" content="Ponencia académica de Carlos Ortet. Reputación, marcas e instituciones ante los modelos de lenguaje. Congreso de relaciones públicas, 3 de junio de 2026." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hepta+Slab:wght@200;300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-100:#D4F2D9; --green-200:#A8E5B4; --green:#2DD60F; --green-deep:#0E7A1F;
+  --green-soft:rgba(45,214,15,.12); --green-line:rgba(14,122,31,.35);
+  --black:#000000; --grey-700:#404040; --grey-500:#7A7A7A; --grey-300:#BFBFBF; --grey-100:#ECECEC;
+  --paper:#FAFAFA; --paper-green:#F4FAF3; --white:#FFFFFF;
+  --line:rgba(0,0,0,.08);
+  --f-display:"Bebas Neue",Impact,sans-serif;
+  --f-body:"Hepta Slab",Georgia,serif;
+  --f-mono:"Roboto Mono",monospace;
+  --f-ui:"Inter",system-ui,sans-serif;
+  --gradient-hero:radial-gradient(70% 50% at 80% 20%,var(--green-100),transparent 60%),radial-gradient(50% 40% at 20% 80%,#E9F9EC,transparent 60%),var(--paper);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-body);background:var(--paper);color:var(--grey-700);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+main{max-width:980px;margin:0 auto;padding:80px 32px 60px;min-height:100vh;display:flex;flex-direction:column;background:var(--gradient-hero)}
+
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:2.4px;text-transform:uppercase;font-weight:500;color:var(--green-deep);margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--green-deep)}
+
+h1{font-family:var(--f-display);font-size:clamp(48px,8vw,108px);font-weight:400;letter-spacing:0;line-height:.95;text-transform:uppercase;color:var(--black);margin-bottom:14px;max-width:14ch}
+h1 .acc{color:var(--green-deep)}
+
+.subtitle{font-family:var(--f-body);font-style:italic;font-weight:200;font-size:clamp(18px,2.4vw,26px);line-height:1.4;color:var(--grey-700);max-width:54ch;margin-bottom:36px}
+
+.meta-line{font-family:var(--f-mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey-500);margin-bottom:48px;display:flex;flex-wrap:wrap;gap:14px}
+.meta-line .sep{color:var(--grey-300)}
+
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(0,0,0,.14);border:1px solid rgba(0,0,0,.14);margin-bottom:48px}
+.card{background:var(--white);padding:32px 28px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:background .2s}
+.card:hover{background:var(--paper-green)}
+.card .c-label{font-family:var(--f-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--green-deep);margin-bottom:14px}
+.card h2{font-family:var(--f-body);font-weight:300;font-size:28px;line-height:1.15;letter-spacing:-.3px;color:var(--black);margin-bottom:12px}
+.card h2 b{font-weight:800;color:var(--green-deep)}
+.card p{font-family:var(--f-body);font-size:14px;line-height:1.6;color:var(--grey-700);margin-bottom:18px}
+.card .c-cta{margin-top:auto;font-family:var(--f-mono);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:var(--black);display:inline-flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.card .c-cta::after{content:"→";color:var(--green-deep);font-size:14px;font-weight:700}
+
+.about{padding:32px 0;border-top:1px solid var(--line);font-family:var(--f-body);font-size:15px;line-height:1.65;color:var(--grey-700);max-width:74ch;margin-bottom:36px}
+.about p+p{margin-top:14px}
+.about strong{color:var(--black);font-weight:600}
+.about em{font-style:italic}
+
+footer{margin-top:auto;padding-top:24px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+footer .col .l{font-family:var(--f-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--green-deep);margin-bottom:8px}
+footer .col p{font-family:var(--f-body);font-size:13px;line-height:1.55;color:var(--grey-700);margin-bottom:2px}
+footer .col p strong{color:var(--black);font-weight:600}
+footer .col p.small{font-size:11.5px;color:var(--grey-500);font-style:italic;margin-top:4px}
+footer .col.right{text-align:right}
+
+@media(max-width:720px){
+  main{padding:48px 22px 40px}
+  .cards{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr}
+  footer .col.right{text-align:left}
+}
+</style>
+</head>
+<body>
+<main>
+
+  <span class="eyebrow">Ponencia · 3 de junio de 2026</span>
+
+  <h1>Cuando metimos el mundo en una <span class="acc">máquina.</span></h1>
+
+  <p class="subtitle">Reputación, marcas e instituciones ante los modelos de lenguaje. Una aproximación empírica para las relaciones públicas.</p>
+
+  <div class="meta-line">
+    <span>Carlos Ortet</span>
+    <span class="sep">·</span>
+    <span>Col·legi Oficial RR.PP., Màrqueting i Publicitat</span>
+    <span class="sep">·</span>
+    <span>UAB · IIIA-CSIC</span>
+  </div>
+
+  <nav class="cards" aria-label="Materiales de la ponencia">
+    <a class="card" href="deck.html">
+      <div class="c-label">Presentación</div>
+      <h2>Deck <b>visual.</b></h2>
+      <p>18 slides en sistema editorial 498A light. Diagramas de mediación algorítmica, pipeline metodológico, casos auditados, simulación multiagente y emergencia. Versión proyectable e imprimible.</p>
+      <span class="c-cta">Abrir deck</span>
+    </a>
+    <a class="card" href="notas.html">
+      <div class="c-label">Documento de cabina</div>
+      <h2>Notas del <b>ponente.</b></h2>
+      <p>Guía paralela al deck: cada slide acompañada de 3-4 párrafos de notas habladas, tiempo estimado y transiciones. Documento para preparación o lectura en sala.</p>
+      <span class="c-cta">Abrir notas</span>
+    </a>
+  </nav>
+
+  <div class="about">
+    <p>Esta sesión presenta <strong>observaciones de campo</strong> sobre cómo los modelos de lenguaje están participando ya en la construcción de la reputación de marcas e instituciones. <strong>No discute marcos teóricos clásicos de la disciplina;</strong> los reconoce y propone aportar evidencia empírica para un debate que la sala debe sostener.</p>
+    <p>Recorre cuatro movimientos: diagnóstico empírico con casos auditados sobre cinco motores generativos, reconfiguración del mapa de agentes (intermediario / portavoz / audiencia), exploración del salto a la <em>mediación decisional</em> con simulación de personae y arquitecturas multiagente, y cinco preguntas abiertas que el ponente deja a consideración del auditorio.</p>
+  </div>
+
+  <footer>
+    <div class="col">
+      <div class="l">Ponente</div>
+      <p><strong>Carlos Ortet</strong></p>
+      <p class="small">Director de Innovación · Col·legi Oficial de Relacions Públiques, Màrqueting i Publicitat de Catalunya</p>
+      <p class="small">Profesor visitante · Universitat Autònoma de Barcelona · IIIA-CSIC</p>
+    </div>
+    <div class="col right">
+      <div class="l">Sesión</div>
+      <p>3 de junio de 2026</p>
+      <p class="small">Congreso académico de Relaciones Públicas</p>
+      <p class="small">40-45 min + coloquio</p>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

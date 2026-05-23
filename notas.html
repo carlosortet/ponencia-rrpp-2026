@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Notas del ponente · Carlos Ortet · 3 de junio de 2026</title>
+<meta name="description" content="Notas del ponente: 3-4 párrafos por slide. Documento de preparación / cabina." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fdfdfb;
+  --ink:#1a1a1a;
+  --ink-2:#3a3a3a;
+  --ink-3:#6a6a6a;
+  --ink-4:#8a8a8a;
+  --rule:#c8c4bc;
+  --rule-soft:#e6e2d8;
+  --accent:#1a365d;
+  --accent-soft:#1a365d0d;
+  --warn:#8b4a1a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Source Serif 4',Georgia,'Times New Roman',serif;
+  background:var(--paper);color:var(--ink);
+  font-size:15px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"kern" 1,"liga" 1,"onum" 1;
+}
+em{font-style:italic}
+strong{font-weight:600}
+.sans{font-family:'Inter',sans-serif}
+
+/* COVER document */
+.doc-cover{
+  max-width:880px;margin:0 auto;padding:80px 60px 60px;
+  border-bottom:1px solid var(--rule);
+}
+.doc-cover .label{
+  font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+  font-weight:600;color:var(--accent);margin-bottom:24px;
+}
+.doc-cover h1{
+  font-size:48px;font-weight:400;letter-spacing:-.012em;line-height:1.1;
+  max-width:24ch;color:var(--ink);margin-bottom:18px;
+}
+.doc-cover h1 em{font-style:italic;font-weight:400}
+.doc-cover .subtitle{
+  font-size:20px;line-height:1.5;color:var(--ink-3);max-width:60ch;
+  font-style:italic;margin-bottom:36px;
+}
+.doc-cover .meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  border-top:1px solid var(--rule);padding-top:24px;
+  font-family:'Inter',sans-serif;font-size:13px;color:var(--ink-2);
+}
+.doc-cover .meta .l{
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:600;color:var(--ink-3);margin-bottom:8px;
+}
+.doc-cover .meta p{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:var(--ink-2);margin-bottom:4px}
+.doc-cover .meta p strong{color:var(--ink);font-weight:600}
+
+.doc-cover .toc{
+  margin-top:40px;border-top:1px solid var(--rule);padding-top:24px;
+}
+.doc-cover .toc h3{
+  font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:600;color:var(--ink-3);margin-bottom:14px;
+}
+.doc-cover .toc ol{list-style:none;column-count:2;column-gap:32px}
+.doc-cover .toc ol li{
+  break-inside:avoid;padding:5px 0;
+  font-family:'Source Serif 4',serif;font-size:13px;color:var(--ink-2);
+  display:flex;align-items:baseline;gap:10px;
+}
+.doc-cover .toc ol li .n{
+  font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.14em;
+  font-weight:600;color:var(--accent);min-width:24px;
+}
+.doc-cover .toc ol li .t{flex:1}
+.doc-cover .toc ol li .tm{
+  font-family:'Inter',sans-serif;font-size:10px;color:var(--ink-4);
+  letter-spacing:.14em;
+}
+
+/* SLIDE NOTES SECTION */
+.slide-notes{
+  max-width:880px;margin:0 auto;padding:60px 60px 50px;
+  border-bottom:1px solid var(--rule);
+  page-break-inside:avoid;break-inside:avoid;
+}
+.slide-notes:last-of-type{border-bottom:0}
+
+.sn-header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:28px;
+  font-family:'Inter',sans-serif;
+}
+.sn-header .left{display:flex;align-items:baseline;gap:18px}
+.sn-header .sn-number{
+  font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+  font-weight:700;color:var(--accent);
+}
+.sn-header .sn-title{
+  font-family:'Source Serif 4',serif;font-size:24px;font-weight:600;
+  letter-spacing:-.005em;color:var(--ink);
+}
+.sn-header .sn-title em{font-style:italic;font-weight:600}
+.sn-header .sn-time{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--ink-3);
+}
+
+.sn-body{display:grid;grid-template-columns:280px 1fr;gap:36px;align-items:flex-start}
+
+.sn-visual{
+  background:var(--paper);border:1px solid var(--rule);padding:16px;
+  font-family:'Inter',sans-serif;font-size:11px;line-height:1.5;color:var(--ink-3);
+  position:sticky;top:20px;
+}
+.sn-visual .v-label{
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;color:var(--accent);margin-bottom:10px;
+  border-bottom:1px solid var(--rule-soft);padding-bottom:8px;
+}
+.sn-visual .v-desc{font-family:'Source Serif 4',serif;font-size:12px;line-height:1.55;color:var(--ink-2)}
+.sn-visual .v-desc strong{color:var(--ink);font-weight:600}
+.sn-visual .v-desc em{font-style:italic}
+.sn-visual .v-quote{
+  margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule-soft);
+  font-style:italic;font-size:12px;color:var(--ink-2);line-height:1.55;
+}
+
+.sn-notes p{
+  font-size:15.5px;line-height:1.7;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.sn-notes p strong{color:var(--ink);font-weight:600}
+.sn-notes p em{font-style:italic}
+.sn-notes .read-aloud{
+  background:var(--accent-soft);border-left:3px solid var(--accent);
+  padding:14px 18px;margin:16px 0;
+  font-family:'Source Serif 4',serif;font-size:15px;line-height:1.6;
+  color:var(--ink);font-style:italic;
+}
+.sn-notes .read-aloud::before{
+  content:"LEER";display:block;
+  font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.22em;
+  font-weight:700;color:var(--accent);font-style:normal;
+  margin-bottom:6px;
+}
+.sn-notes .cue{
+  font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:600;color:var(--warn);
+  margin-top:8px;
+}
+
+.transition{
+  max-width:880px;margin:0 auto;padding:32px 60px;
+  text-align:center;border-bottom:1px solid var(--rule);
+  font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.32em;
+  text-transform:uppercase;font-weight:600;color:var(--accent);
+}
+
+@media print{
+  body{background:#fff}
+  .slide-notes{page-break-after:always;break-after:page;border-bottom:0}
+  .doc-cover{page-break-after:always;break-after:page}
+  .transition{page-break-after:always}
+}
+
+@media(max-width:720px){
+  .doc-cover,.slide-notes{padding:40px 24px}
+  .sn-body{grid-template-columns:1fr;gap:18px}
+  .sn-visual{position:static}
+  .doc-cover .toc ol{column-count:1}
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================== -->
+<!-- DOC COVER                                            -->
+<!-- ================================================== -->
+<section class="doc-cover">
+  <div class="label">Notas del ponente · Documento de cabina</div>
+  <h1><em>Cuando metimos el mundo en una máquina.</em></h1>
+  <p class="subtitle">Reputación, marcas e instituciones ante los modelos de lenguaje. Notas habladas por slide.</p>
+
+  <div class="meta">
+    <div>
+      <div class="l">Ponente</div>
+      <p><strong>Carlos Ortet</strong></p>
+      <p>Director de Innovación · Col·legi Oficial de Relacions Públiques, Màrqueting i Publicitat de Catalunya</p>
+      <p>Profesor visitante · UAB · IIIA-CSIC</p>
+    </div>
+    <div>
+      <div class="l">Sesión</div>
+      <p>Congreso académico de Relaciones Públicas</p>
+      <p>3 de junio de 2026 · 40-45 min + Q&amp;A</p>
+      <p>Sala estimada: 40 asistentes</p>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h3>Índice · 18 slides · ~40 min</h3>
+    <ol>
+      <li><span class="n">01</span><span class="t">Portada</span><span class="tm">0,5 min</span></li>
+      <li><span class="n">02</span><span class="t">Encuadre · desde dónde les hablo</span><span class="tm">2 min</span></li>
+      <li><span class="n">03</span><span class="t">Marco conceptual · tres tradiciones</span><span class="tm">2 min</span></li>
+      <li><span class="n">04</span><span class="t">El desplazamiento de capa · tesis</span><span class="tm">3 min</span></li>
+      <li><span class="n">05</span><span class="t">Cuatro observaciones empíricas</span><span class="tm">3 min</span></li>
+      <li><span class="n">06</span><span class="t">El espacio donde ocurre · volumen</span><span class="tm">2 min</span></li>
+      <li><span class="n">07</span><span class="t">Metodología · pipeline + escala</span><span class="tm">3,5 min</span></li>
+      <li><span class="n">08</span><span class="t">Tres casos anónimos</span><span class="tm">3 min</span></li>
+      <li><span class="n">09</span><span class="t">Tres asimetrías del agente</span><span class="tm">3 min</span></li>
+      <li><span class="n">10</span><span class="t">Pregunta abierta · pausa</span><span class="tm">1 min</span></li>
+      <li><span class="n">11</span><span class="t">Dos desplazamientos en curso</span><span class="tm">2 min</span></li>
+      <li><span class="n">12</span><span class="t">Simulación de públicos</span><span class="tm">3 min</span></li>
+      <li><span class="n">13</span><span class="t">Dos proyectos recientes</span><span class="tm">4 min</span></li>
+      <li><span class="n">14</span><span class="t">Multiagente y emergencia</span><span class="tm">4 min</span></li>
+      <li><span class="n">15</span><span class="t">Cinco preguntas abiertas</span><span class="tm">2 min</span></li>
+      <li><span class="n">16</span><span class="t">Cierre · frase ancla</span><span class="tm">1 min</span></li>
+      <li><span class="n">17</span><span class="t">Referencias · pasar rápido</span><span class="tm">0,5 min</span></li>
+      <li><span class="n">18</span><span class="t">Q&amp;A · apertura coloquio</span><span class="tm">— + Q&amp;A</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 01 · COVER                                     -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 01</span><h2 class="sn-title">Portada</h2></div>
+    <span class="sn-time">0,5 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Portada con título grande: <strong>"Cuando metimos el mundo en una máquina"</strong>. Subtítulo en cursiva: <em>"Reputación, marcas e instituciones ante los modelos de lenguaje"</em>. Al pie, identificación del ponente y la sesión.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Antes de proyectar el cambio, saludo y agradezco al comité. Pausa de un segundo. Click.</p>
+      <p>Leo el título despacio, dejando la frase en el aire dos segundos antes de seguir. La metáfora es deliberadamente fuerte: hemos puesto buena parte del conocimiento humano dentro de un sistema que ahora habla por nosotros sobre cualquier marca o institución que ustedes investiguen.</p>
+      <p>Aclaro brevemente que en cuarenta y cinco minutos voy a hacer cuatro movimientos: <strong>diagnóstico</strong> (qué hemos visto), <strong>reconfiguración</strong> (qué implica), <strong>simulación</strong> (qué viene) y <strong>preguntas</strong> (qué dejo sobre la mesa).</p>
+      <p class="cue">Transición → click slide 2</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 02 · ENCUADRE                                  -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 02</span><h2 class="sn-title">Encuadre · desde dónde les hablo</h2></div>
+    <span class="sn-time">2 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Frase grande: <strong>"El objetivo es aportar observación de campo sobre un fenómeno que ya está afectando al objeto que ustedes estudian."</strong></div>
+      <div class="v-quote">Debajo: las relaciones públicas son una disciplina con un siglo de tradición, no vengo a discutir ninguno de sus marcos.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Aquí establezco la posición. Es el momento más delicado: si no aterrizo bien, el público se cierra. Hablar despacio, sin tono evangelista.</p>
+      <p>Reconozco explícitamente el canon de la disciplina: <strong>Excellence Theory, teoría situacional de los públicos, teoría dialógica, corriente retórica, corriente crítica</strong>. Las nombro brevemente, sin entrar en ninguna. La mención del canon es el signo de respeto que abre la sala.</p>
+      <p>Cierro con la frase clave: <em>"vengo desde la observación empírica. Mi rol aquí es traer el dato y la pregunta. El marco interpretativo es de ustedes."</em> Pausa. Esta frase es la que asegura que lo que sigue se reciba como contribución, no como invasión.</p>
+      <p class="cue">Transición → click slide 3</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 03 · MARCO CONCEPTUAL                          -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 03</span><h2 class="sn-title">Marco conceptual · tres tradiciones</h2></div>
+    <span class="sn-time">2 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Tres bloques numerados: <strong>(1) Mediación y esfera pública</strong> (Martín-Barbero, Verón, Habermas); <strong>(2) Agentes no humanos en redes</strong> (Latour, Callon, Just &amp; Latzer, Bucher); <strong>(3) Públicos y relación OPR</strong> (Kim &amp; Grunig, Kent &amp; Taylor).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Aunque la presentación es empírica, conviene declarar las tradiciones que sostienen el modo de mirar. No pretendo añadir a ninguna; me apoyo en ellas para nombrar lo que veo."</p>
+      <p>Repaso cada tradición en una frase. <strong>Mediación:</strong> Martín-Barbero y Verón nos enseñaron a mirar cómo se construye sentido entre la emisión y la recepción. <strong>Agentes no humanos:</strong> Latour nos da el vocabulario para pensar entidades técnicas como actuantes, no como herramientas; Just y Latzer lo aplicaron explícitamente a sistemas algorítmicos. <strong>Públicos y OPR:</strong> Kim y Grunig en la teoría situacional; Kent y Taylor en la dialógica. De ahí parto.</p>
+      <p>El movimiento aquí es señalar que el problema que voy a describir no es ajeno a la disciplina — tiene ya vocabulario en ella. Solo hay que activarlo en un objeto nuevo.</p>
+      <p class="cue">Transición → "Con ese andamiaje, vamos al objeto." Click slide 4</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 04 · TESIS / DESPLAZAMIENTO                    -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 04</span><h2 class="sn-title">El desplazamiento de capa · tesis</h2></div>
+    <span class="sn-time">3 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Cita en italic con barra lateral: <em>"Cuando un ciudadano pregunta a un modelo qué piensa de una marca, no recibe información: recibe una posición."</em></div>
+      <div class="v-quote">Diagrama: pipeline clásico (gris, atenuado, ciudadano→medio→periodista→información→opinión) <strong>vs</strong> pipeline nuevo (acento, ciudadano→modelo→posición + tres asimetrías al pie).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Esta es la slide-tesis. Aquí me detengo. Leo la frase central despacio. <em>"No recibe información: recibe una posición."</em> Es la diferencia clave que organiza todo lo que viene.</p>
+      <div class="read-aloud">Antes, cuando un ciudadano quería saber qué pensar de una marca o de una institución, atravesaba una serie de mediadores humanos: medios, periodistas, círculos de confianza, expertos. Cada paso filtraba información y producía interpretación. Hoy, una parte creciente de ese recorrido se sustituye por una sola interacción: una pregunta al modelo, una respuesta articulada. Y esa respuesta no es información neutra. Es una posición. El modelo elige, argumenta, recomienda. Sin editor responsable, sin trazabilidad temporal, sin segmentación por público.</div>
+      <p>Apunto al diagrama. Arriba lo que conocemos. Abajo lo nuevo. Las cuatro asimetrías al pie (sin editor responsable, no estable en el tiempo, no diferencia entre públicos, no segmentable como audiencia) son las que vamos a ir desarrollando en las próximas slides.</p>
+      <p class="cue">Transición → "Lo que sigue son cuatro patrones que aparecen en cada estudio." Click slide 5</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 05 · CUATRO OBSERVACIONES                      -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 05</span><h2 class="sn-title">Cuatro observaciones empíricas</h2></div>
+    <span class="sn-time">3 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Lista numerada de cuatro patrones: <strong>(01)</strong> heterogeneidad sistemática entre motores; <strong>(02)</strong> toma de posición ante comparativos; <strong>(03)</strong> validación implícita de premisas; <strong>(04)</strong> volumen ya no marginal.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Estos son los cuatro patrones que aparecen en cada auditoría que hacemos, en cinco motores de propósito general (ChatGPT, Gemini, Claude, Perplexity, Copilot). Los recorro en orden.</p>
+      <p><strong>Heterogeneidad sistemática.</strong> El mismo prompt sobre la misma organización devuelve juicios distintos entre motores. No es ruido aleatorio: cada motor tiene un sesgo consistente. La reputación medida es plural, no única. Esto solo ya rompe la práctica clásica del "informe de imagen agregado".</p>
+      <p><strong>Toma de posición ante comparativos.</strong> Cuando preguntas "¿cuál es mejor, A o B?", el modelo casi nunca se abstiene. Elige. Y la elección sigue patrones reproducibles. <strong>Validación implícita de premisas.</strong> Si introduces una asunción crítica en el prompt, el modelo rara vez la corrige: la acepta y la desarrolla. Es el <em>anchoring</em> de Tversky y Kahneman aplicado a marcos reputacionales. Tiene consecuencias.</p>
+      <p><strong>Volumen ya no marginal.</strong> AI Overviews aparece en el 21% de búsquedas globales de Google, en más del 30% en sectores YMYL — salud, finanzas, legal —, y crece más del 70% interanual. Esto no es laboratorio: es exposición real.</p>
+      <p class="cue">Transición → "Pongamos la escala en perspectiva." Click slide 6</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 06 · VOLUMEN                                   -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 06</span><h2 class="sn-title">El espacio donde ocurre · volumen</h2></div>
+    <span class="sn-time">2 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Tabla con cuatro filas: <strong>21%</strong> búsquedas globales con AIO; <strong>&gt;30%</strong> en YMYL; <strong>&gt;70%</strong> crecimiento interanual; <strong>1:3-4</strong> equivalencia consulta LLM / búsqueda generativa. Fuentes declaradas en columna derecha.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"El espacio donde se forma la reputación se ha desplazado más rápido de lo que nuestros instrumentos de observación pueden seguir." Esa es la frase que conviene que se quede.</p>
+      <p>Los datos están en la tabla — los voy a leer en voz alta despacio porque importan. <strong>21% de búsquedas globales</strong> en Google ya muestran un bloque generativo AI Overview. En sectores YMYL — Your Money, Your Life, los sectores donde la reputación más afecta a decisiones materiales — esa cifra supera el 30%. El crecimiento interanual del bloque está por encima del 70%.</p>
+      <p>La cuarta línea es la que más sorprende a la sala: <strong>una sola consulta a un LLM equivale, en exposición reputacional, a tres o cuatro búsquedas con bloque AIO</strong>. Esto es importante porque significa que aunque la mayoría de la gente todavía busca por Google, los que ya consultan a un LLM tienen exposición mucho más concentrada y articulada.</p>
+      <p>Implicación: <strong>análisis de medios, encuestas de imagen, clipping reputacional clásico</strong> no muestrean este espacio. Por construcción.</p>
+      <p class="cue">Transición → "Antes de los casos, conviene mostrar cómo trabajamos." Click slide 7</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 07 · METODOLOGÍA                               -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 07</span><h2 class="sn-title">Metodología · pipeline + escala</h2></div>
+    <span class="sn-time">3,5 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Diagrama horizontal completo del pipeline: <strong>Brand Profile</strong> → <strong>Semantic Brand Space Generation</strong> (saturación ~10K prompts, knowledge DB) → <strong>Multiagent GEO Platform</strong> (personae simulation, AI agents team, LLMs, internet) → <strong>KPIs Tracking &amp; Actionable Insights</strong>.</div>
+      <div class="v-quote">Debajo, cuatro números grandes: <strong>12M+</strong> menciones · <strong>100M+</strong> atributos · <strong>1M+</strong> conversaciones · <strong>1.000+</strong> personae.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Antes de los casos, conviene enseñar el cómo. Esto es el sistema que produce los datos." Pausa de un segundo apuntando al diagrama. La imagen funciona sola.</p>
+      <p>Recorro el pipeline en voz alta: <strong>brand profile</strong> con growth levers, personas, atributos y competidores. <strong>Generación del espacio semántico</strong> con validación de cobertura — entre tres mil y treinta mil prompts personalizados por estudio, hasta el punto de saturación. <strong>Multiagent GEO platform</strong> que simula personae interactuando con los cinco motores generativos. <strong>KPIs y insights accionables</strong> al final.</p>
+      <p>Apunto a la fila de números. <strong>Doce millones de menciones</strong> de marcas e instituciones acumuladas. <strong>Cien millones de atributos</strong> extraídos. <strong>Más de un millón de conversaciones</strong> procesadas y clasificadas. <strong>Más de mil customer personae</strong> sintéticos diseñados. Estos datos son el combustible para el entrenamiento de nuestros agentes — cifras agregadas desde 2024, ningún cliente individual figura aquí.</p>
+      <p>Cierro con las limitaciones declaradas: estudios encargados, no muestra aleatoria; datos no liberados a revisión por pares; <em>black-box</em> de los modelos. Es importante decirlo en voz alta: hablamos de operación empírica seria pero no de ciencia abierta replicable. Esto pone en valor el papel del campo académico — algo que retomo al final.</p>
+      <p class="cue">Transición → "Veamos tres patrones concretos." Click slide 8</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 08 · TRES CASOS                                -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 08</span><h2 class="sn-title">Tres casos anónimos</h2></div>
+    <span class="sn-time">3 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Tres tarjetas: <strong>Caso A — universidad pública europea</strong> (28% citación, AAS 47/100); <strong>Caso B — operador transporte regular</strong> (SoV opuesto en 2 de 5 motores; sentimiento entre +0,42 y −0,18); <strong>Caso C — organismo regulador</strong> (4 de 5 motores aceptan premisa crítica errónea).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Tres casos para mostrar que los patrones aparecen en sectores muy distintos. Marcas anonimizadas, patrones no."</p>
+      <p><strong>Caso A.</strong> Una universidad pública europea, top-200 QS en varias disciplinas. La IA la cita como referente académico solo en el 28% de las consultas internacionales de captación en ingeniería. Su autoridad académica medida es 47 sobre 100. <em>Lección: el ranking tradicional no garantiza autoridad académica en el espacio generativo.</em> Los rankings que la disciplina ha estudiado durante décadas no traducen automáticamente.</p>
+      <p><strong>Caso B.</strong> Un operador europeo de transporte regular con presencia en más de cincuenta mercados. Dos de los cinco motores asignan a la marca un share of voice opuesto frente al mismo competidor. El sentimiento agregado oscila entre +0,42 y −0,18 según qué motor uses. <em>Lección: medir "la reputación" en singular es estadísticamente engañoso.</em></p>
+      <p><strong>Caso C.</strong> Un organismo regulador europeo con alta exposición mediática en 2025. En cuatro de los cinco motores, una premisa crítica errónea introducida en el prompt fue aceptada y desarrollada sin corrección por el modelo. <em>Lección: los marcos críticos pre-cargados se vuelven marcos confirmados.</em> Efecto acumulativo sobre reputación medida.</p>
+      <p class="cue">Transición → "Estos son patrones generales. Ahora dos proyectos donde la profundidad nos enseñó más." Click slide 9</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 09 · TRES ASIMETRÍAS                           -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 09</span><h2 class="sn-title">Tres asimetrías del agente no humano</h2></div>
+    <span class="sn-time">3 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Tres bloques numerados: <strong>(01)</strong> sin responsable editorial identificable; <strong>(02)</strong> no estable en el tiempo; <strong>(03)</strong> no diferencia entre públicos. Cita a Latour 2005 y Kim &amp; Grunig 2011.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Conviene poner nombre al actor que estamos describiendo. El modelo de lenguaje no es canal, no es medio, no es público. Ocupa simultáneamente tres funciones del esquema clásico: intermediario, portavoz y audiencia. Y presenta tres asimetrías estructurales respecto al mediador tradicional."</p>
+      <p><strong>Sin responsable editorial.</strong> No hay con quién hablar para rectificar. La doctrina clásica de relaciones con medios no opera. <em>Pregunta retórica:</em> ¿cabe pensar una doctrina de derecho de rectificación frente a un sistema sin editor responsable?</p>
+      <p><strong>No estable en el tiempo.</strong> La respuesta de hoy puede no ser la de mañana, sin trazabilidad pública. La reputación medida es volátil por construcción, no por ruido. Eso obliga a revisar las nociones de permanencia y consistencia reputacional que la disciplina ha asumido como condiciones de fondo.</p>
+      <p><strong>No diferencia entre públicos.</strong> Emite la misma respuesta al periodista, al regulador, al inversor, al activista y al ciudadano. Esto colapsa la segmentación clásica de públicos, sobre la que se construye buena parte de la teoría situacional de Kim y Grunig. Vocabulario útil para pensar agentes con estas propiedades existe en la corriente ANT — Latour 2005 — sin pretensión de cerrar el debate.</p>
+      <p class="cue">Transición → "Una pregunta para la sala, antes de seguir." Click slide 10</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 10 · PREGUNTA ABIERTA                          -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 10</span><h2 class="sn-title">Pregunta abierta · pausa</h2></div>
+    <span class="sn-time">1 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Slide minimalista. Una sola frase en cita italic: <em>"¿Cómo se incorpora un agente con estas propiedades a los marcos clásicos de públicos y stakeholders sin desbordar la coherencia teórica del campo?"</em></div>
+    </aside>
+    <div class="sn-notes">
+      <p>Este es un momento deliberado de pausa. <strong>No es una pregunta retórica.</strong> No es una pregunta para mí.</p>
+      <div class="read-aloud">Me detengo aquí. Esta pregunta no la voy a responder yo. La dejo en el aire para que la sala la sostenga un momento. ¿Cómo se incorpora un agente con las propiedades que acabamos de describir — opaco, inestable, sin editor, sin segmentación — a los marcos clásicos de públicos y stakeholders sin desbordar la coherencia teórica del campo? Es una pregunta para ustedes. Yo solo la formulo.</div>
+      <p>Dos segundos de silencio reales. Mirar a la sala. Después: "Sigamos."</p>
+      <p class="cue">Transición → click slide 11</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 11 · DOS DESPLAZAMIENTOS                       -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 11</span><h2 class="sn-title">Dos desplazamientos en curso</h2></div>
+    <span class="sn-time">2 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Dos columnas (en 498A light: split full-bleed antes/después). <strong>Antes:</strong> mediación informativa, la reputación se mide por la opinión que se forma una persona. <strong>Después:</strong> mediación decisional, la reputación se mide por la decisión que toma un agente en su lugar.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Dos desplazamientos en curso. Ambos los presento con cautela — son observación, no predicción cerrada."</p>
+      <p><strong>Desplazamiento I.</strong> De la mediación informativa a la mediación decisional. El siguiente escalón no es que las personas consulten a un modelo: es que <em>agentes autónomos actúen en nombre de personas</em>. Comparar, descartar, contratar, recomendar. Cuando eso ocurra, la reputación deja de medirse por la opinión que se forma una persona y empieza a medirse por la <strong>decisión que toma un agente en su lugar</strong>. Eso se acerca más al marco de <em>agency</em> de Giddens que al marco clásico de percepción / imagen / actitud que la disciplina ha utilizado durante décadas. Las implicaciones son <strong>materiales, no solo simbólicas</strong>.</p>
+      <p><strong>Desplazamiento II.</strong> La literatura reciente — Park et al. 2023 y 2024, Argyle et al. 2023 — ha abierto la posibilidad de <strong>simular personae, segmentos y configuraciones sociales</strong> mediante agentes basados en modelos de lenguaje. Esto es lo que más me interesa para ustedes. Implicaciones potenciales: anticipar reacciones, ensayar mensajes, explorar escenarios.</p>
+      <p class="cue">Transición → "Empecemos por la simulación de públicos. Posibilidades y cautelas." Click slide 12</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 12 · SIMULACIÓN DE PÚBLICOS                    -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 12</span><h2 class="sn-title">Simulación de públicos · posibilidades y cautelas</h2></div>
+    <span class="sn-time">3 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Dos columnas: <strong>Posibilidades</strong> (investigación social exploratoria, diseño estratégico, anticipación de crisis) <em>vs</em> <strong>Cautelas</strong> (validez externa por demostrar, sesgo de representación, sustitución prematura).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Una línea de trabajo abierta, no una herramienta lista. Conviene tratarla con la cautela metodológica que el campo aplica a cualquier instrumento nuevo, y reconocer explícitamente los riesgos."</p>
+      <p><strong>Posibilidades.</strong> Tres aperturas claras. <em>Investigación social:</em> estudios exploratorios sobre cómo reaccionarían segmentos a estímulos comunicacionales, con replicabilidad inmediata. <em>Diseño estratégico:</em> ensayar mensajes y posicionamientos en públicos sintéticos antes de actuar — equivalente conceptual a una prueba A/B reputacional preliminar. <em>Anticipación de crisis:</em> explorar escenarios de respuesta ante eventos previsibles, sin coste de campo, iterando.</p>
+      <p><strong>Cautelas.</strong> También tres, simétricas. <em>Validez externa por demostrar:</em> la capacidad predictiva de los públicos sintéticos sobre comportamiento real no está consolidada — riesgo de <strong>ilusión de fiabilidad</strong>. <em>Sesgo de representación:</em> las simulaciones tienden a sobre-representar las poblaciones presentes en el corpus de entrenamiento. <em>Sustitución prematura:</em> reemplazar métodos cualitativos consolidados por simulación es una tentación que conviene resistir hasta que existan estándares de validación aceptados por la disciplina.</p>
+      <p>Cierre cuidadoso: la validación rigurosa de esta línea excede lo que la industria puede aportar por sí sola — ahí es donde el estándar metodológico del campo académico se vuelve <strong>insustituible</strong>.</p>
+      <p class="cue">Transición → "Para mostrar que no estamos solo en literatura, dos proyectos recientes." Click slide 13</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 13 · DOS PROYECTOS                             -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 13</span><h2 class="sn-title">Dos proyectos recientes</h2></div>
+    <span class="sn-time">4 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc"><strong>Caso 1:</strong> multinacional global · alimentación infantil · crisis 2026. <strong>21</strong> personae sintéticas, <strong>3</strong> territorios, <strong>19K+</strong> fuentes. <strong>Caso 2:</strong> organismo europeo de cooperación internacional · modelado de la población de El Salvador y su diáspora.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Dos proyectos recientes donde el problema nos enseñó más que la literatura. Comparto método y aprendizaje, no resultados de cliente."</p>
+      <p><strong>Caso 1.</strong> Crisis reputacional en 2026 de una multinacional global en el sector de alimentación infantil. <strong>Modelamos 21 customer personae sintéticas</strong> distribuidas en tres territorios. Perfiles cruzados: profesionales de pediatría y padres. Construimos el <strong>espacio semántico completo</strong> de las submarcas más los competidores del sector. Más de <strong>diecinueve mil fuentes</strong> localizadas y atribuidas. <em>Lección metodológica:</em> el análisis de sentimiento agregado no permitía clasificar las conversaciones por objetivo comunicacional. Tuvimos que pasar a <strong>análisis de intención</strong>. Para predecir efecto reputacional, la intención del comentario importa más que su carga afectiva.</p>
+      <p><strong>Caso 2.</strong> Organismo europeo de cooperación internacional. Modelado de la <strong>población de El Salvador y su diáspora</strong>. Simulación poblacional con personae sintéticas representando tanto al país-origen como a las comunidades transnacionales en distintos países-receptores. <em>Lección metodológica:</em> la diáspora opera como un <strong>público transnacional con dinámica propia</strong>. Sus respuestas a estímulos comunicacionales no coinciden con las del país-origen ni con las del receptor. Capturarlo exige modelado poblacional, no segmentación clásica.</p>
+      <p>Dos consecuencias técnicas comunes a ambos proyectos. Primero, en un sistema estocástico como los LLMs, la representatividad exige volumen alto y cobertura semántica completa — por eso hemos desarrollado <strong>algoritmos de completitud semántica</strong> que detectan el punto de saturación. Segundo: la <strong>simulación de personae a gran volumen no es lujo, es condición de posibilidad</strong> para extraer conclusiones. Sin ella, los hallazgos son anecdóticos.</p>
+      <p class="cue">Transición → "Y el siguiente salto: multiagente." Click slide 14</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 14 · MULTIAGENTE Y EMERGENCIA                  -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 14</span><h2 class="sn-title">Multiagente y emergencia</h2></div>
+    <span class="sn-time">4 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Diagrama lado a lado. <strong>Izquierda · Schelling 1971:</strong> grid de puntos mezclados → grid clusterizado emergente. <strong>Derecha · Park et al. 2023:</strong> 25 agentes LLM en "Smallville" con líneas de interacción.</div>
+      <div class="v-quote">Caption común: "Dos generaciones · una misma lógica · el todo colectivo no está en ningún agente individual."</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Aquí me detengo en el diagrama. <em>"La emergencia no es una novedad de la IA. La disciplina la conoce desde hace medio siglo."</em></p>
+      <p><strong>Izquierda:</strong> Schelling 1971. Cada agente prefiere tener más del treinta por ciento de vecinos similares. Una regla local trivial. Sin reglas globales, sin coordinación. El sistema converge a segregación. El resultado colectivo — la segregación — <strong>no está en ningún agente individual</strong>. Es propiedad del sistema. Ese fenómeno se llama <strong>emergencia</strong>, y la sociología computacional lo ha estudiado durante décadas: Schelling, Epstein y Axtell, Macy y Willer.</p>
+      <p><strong>Derecha:</strong> Park y colegas, Stanford, 2023. Veinticinco agentes basados en LLMs en un pueblo virtual. Se les sembró una única intención: que uno de ellos quería organizar una fiesta de San Valentín. <strong>Sin programar el resto.</strong> Los agentes se invitaron, hicieron amistad, coordinaron citas y aparecieron juntos en la fiesta. Emergencia social no programada. Es la <strong>misma lógica que Schelling</strong>, ahora con agentes que entienden lenguaje.</p>
+      <p>Para nosotros, en relaciones públicas, esto abre la posibilidad de explorar <strong>fenómenos del campo que siempre han sido emergentes</strong>: cascadas reputacionales, formación de boicots, espirales de silencio bajo condiciones controladas, difusión y contradifusión de marcos narrativos entre stakeholders interdependientes.</p>
+      <p>Honestidad sobre el estado del trabajo: <em>"if you didn't grow it, you didn't explain it"</em> es la regla de Epstein. Equipos que ya operamos simulación de personae a gran volumen — el nuestro entre ellos — estamos en <strong>piloto avanzado</strong> con multiagente. La validación rigurosa de la precisión predictiva todavía requiere meses. <strong>Es agenda, no herramienta lista.</strong></p>
+      <p class="cue">Transición → "Voy cerrando con cinco preguntas que dejo abiertas." Click slide 15</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 15 · CINCO PREGUNTAS                           -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 15</span><h2 class="sn-title">Cinco preguntas abiertas</h2></div>
+    <span class="sn-time">2 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Cinco bloques numerados con etiqueta: <strong>(01) Medición · (02) Marco conceptual · (03) Ética y deontología · (04) Validez metodológica · (05) Formación</strong>.</div>
+    </aside>
+    <div class="sn-notes">
+      <p>Encuadre explícito para desactivar el riesgo de paternalismo: <em>"No traigo agenda de investigación a esta sala. Traigo cinco preguntas que me he ido encontrando y que no he sabido resolver con los marcos a los que normalmente recurro. Las dejo aquí, no como propuesta, sino como inquietudes para el debate."</em></p>
+      <p>Leo cada una. <strong>Medición:</strong> ¿qué instrumentos necesita la disciplina para observar la reputación en el espacio generativo con validez y replicabilidad? <strong>Marco conceptual:</strong> ¿cómo se incorpora un agente no humano, opaco e inestable a los modelos clásicos de públicos y stakeholders sin desbordar la coherencia teórica del campo? <strong>Ética y deontología:</strong> ¿quién responde de la reputación formada por un modelo? ¿Cabe una doctrina de derecho de rectificación frente a un sistema sin editor responsable?</p>
+      <p><strong>Validez metodológica de la simulación:</strong> ¿bajo qué condiciones la simulación de públicos puede considerarse evidencia legítima en investigación de relaciones públicas, y no artefacto? <strong>Formación:</strong> ¿qué deben saber sobre todo esto los futuros profesionales que ustedes están formando ahora?</p>
+      <p class="cue">Transición → "Cierro." Click slide 16</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 16 · CIERRE                                    -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 16</span><h2 class="sn-title">Cierre · frase ancla</h2></div>
+    <span class="sn-time">1 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Fondo oscuro. Cita en italic: <em>"No traigo respuestas. Traigo un fenómeno que ya está afectando al objeto que ustedes estudian, y la convicción de que las preguntas correctas se formulan mejor desde esta sala que desde la mía."</em></div>
+    </aside>
+    <div class="sn-notes">
+      <p>Aquí cambio el ritmo. Bajar la voz medio tono. Pausa antes de leer.</p>
+      <div class="read-aloud">No traigo respuestas. Traigo un fenómeno que ya está afectando al objeto que ustedes estudian, y la convicción de que las preguntas correctas se formulan mejor desde esta sala que desde la mía.</div>
+      <p>Dos segundos de silencio. Mirar a la sala. <em>"Gracias por su atención."</em></p>
+      <p class="cue">Click slide 17 (referencias) o saltar directamente a slide 18 (Q&amp;A) según tiempo</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 17 · REFERENCIAS                               -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 17</span><h2 class="sn-title">Referencias · pasar rápido</h2></div>
+    <span class="sn-time">0,5 min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Bibliografía en dos columnas: 21 referencias en formato APA (Schelling, Epstein, Park, Argyle, Latour, Habermas, Martín-Barbero, Verón, Just &amp; Latzer, Bucher, Kim &amp; Grunig, Kent &amp; Taylor, Giddens, Noelle-Neumann, Macy &amp; Willer, Tversky &amp; Kahneman, Callon, Ortet 2025).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Las referencias quedan aquí para quien quiera profundizar. No las leo. Las dejo disponibles."</p>
+      <p>Gesto de mano hacia la slide. No detenerse más de 10-15 segundos. Click hacia Q&amp;A.</p>
+      <p class="cue">Click slide 18</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== -->
+<!-- SLIDE 18 · Q&A                                       -->
+<!-- ================================================== -->
+<section class="slide-notes">
+  <header class="sn-header">
+    <div class="left"><span class="sn-number">Slide 18</span><h2 class="sn-title">Q&amp;A · apertura coloquio</h2></div>
+    <span class="sn-time">5+ min</span>
+  </header>
+  <div class="sn-body">
+    <aside class="sn-visual">
+      <div class="v-label">En pantalla</div>
+      <div class="v-desc">Slide de cierre. Título Q&amp;A. Datos del ponente (cargo Col·legi, afiliación UAB / IIIA-CSIC, publicación Harvard Deusto). Al pie en pequeño: el trabajo de campo descrito procede de proyectos realizados desde la plataforma <strong>GEORadar</strong> (498A).</div>
+    </aside>
+    <div class="sn-notes">
+      <p>"Cualquier pregunta, matiz o desacuerdo será bienvenido. Las preguntas más útiles para mí serán las que cuestionen mis propios supuestos, no las que los confirmen."</p>
+      <p>Si se hace silencio prolongado, primer rescate: <em>"Una pregunta que dejé flotando en la slide diez — la del agente no humano y los marcos clásicos de stakeholders — me sigue inquietando. ¿Alguien la quiere recoger?"</em></p>
+      <p>Si preguntan por la plataforma de campo: mencionar GEORadar de pasada, sin entrar en detalle. <em>"El trabajo empírico se realiza desde una plataforma que hemos construido en 498A llamada GEORadar; los detalles técnicos los explico fuera si interesa."</em> Suficiente — la sala registra que existe, no se convierte en pitch.</p>
+      <p>Cerrar el coloquio cuando proceda con: <em>"Gracias a todos. Y por la disciplina que ustedes mantienen."</em></p>
+      <p class="cue">Fin</p>
+    </div>
+  </div>
+</section>
+
+<section class="transition">Notas del ponente · v1 · 22 de mayo de 2026</section>
+
+</body>
+</html>
