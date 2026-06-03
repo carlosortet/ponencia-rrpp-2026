@@ -9,9 +9,10 @@ Ponencia académica de **Carlos Ortet** en el congreso de relaciones públicas d
 | Archivo | Descripción |
 |---------|-------------|
 | `index.html` | Landing con enlaces a los dos materiales |
-| `deck.html` | Deck visual (18 slides, sistema editorial 498A light). Imprimible a PDF en formato 1920×1080 |
-| `notas.html` | Notas del ponente para preparación / cabina. Visual ref + 3-4 párrafos por slide + tiempos |
-| `assets/georadar-pipeline.png` | Imagen del pipeline metodológico (slide 7 del deck) |
+| `deck.html` | Deck visual HTML preliminar (18 slides, sistema editorial 498A light). Versión web del concepto inicial — imprimible a PDF en formato 1920×1080 |
+| `notas.html` | **Notas del ponente para la versión final (29 slides)** — thumbnail visual + 3-4 párrafos hablados + tiempo estimado por slide. Documento de cabina |
+| `assets/georadar-pipeline.png` | Imagen del pipeline metodológico (slide 7 del deck HTML) |
+| `assets/slide-thumbs/` | 29 thumbnails (1067×600 px) de la versión final del deck, embebidos en `notas.html` |
 
 ## Sobre la ponencia
 
